@@ -1,22 +1,35 @@
-<div style="display: flex; height: 100vh;">
-  <div style="border-right: 1px solid #ccc;">
-    <p-steps [model]="steps" [(activeIndex)]="activeIndex"></p-steps>
-  </div>
-  <div style="flex: 3; padding: 20px; background-color: #f2f2f2;">
-  
-  <ng-container [ngSwitch]="activeIndex">
-    <div *ngIf="showCompanyInfo"><app-company-info *ngSwitchCase="0" (next)="onNext()"></app-company-info></div>
-    <div *ngIf="showContactInfo"><app-contact-info *ngSwitchCase="1" (next)="onNext()"></app-contact-info>
+
+<div>
+  <div class="dasboard-container">
+    <div class="stepper">
+      <div *ngFor="let step of steps; let i = index" class="step-container">
+        <div 
+          class="step-line" 
+          *ngIf="i < steps.length - 1" 
+          [ngClass]="{'completed': i < activeStep}"></div>
+        <div 
+          [ngClass]="{'active': i === activeStep, 'completed': i <= activeStep}"
+          (click)="goToStep(i)" 
+          class="step">
+          <div class="step-number" [ngClass]="{'completed': i <= activeStep}">
+            <span *ngIf="i < activeStep">&#10003;</span>
+            <span *ngIf="i === activeStep && i < steps.length - 1">{{ i + 1 }}</span>
+            <span *ngIf="i === steps.length - 1 && activeStep === steps.length - 1">&#10003;</span>
+            <span *ngIf="i > activeStep">{{ i + 1 }}</span>
+          </div>
+          <div class="step-title">{{ step.title }}</div>
+        </div>
+      </div>
     </div>
-    <div *ngIf="showCompanyDocu">
-    <app-company-documentation *ngSwitchCase="2" (next)="onNext()"></app-company-documentation>
+    <div class="step-content">
+      <ng-container *ngIf="activeStep !== null">
+        <ng-container *ngComponentOutlet="steps[activeStep].component"></ng-container>
+      </ng-container>
+      <div class="navigation-buttons">
+        <button (click)="prevStep()" [disabled]="activeStep === 0">Previous</button>
+        <button (click)="nextStep()" [disabled]="activeStep === steps.length - 1">Next</button>
+      </div>
+    </div>
+    
   </div>
-  </ng-container>
-  <!-- <div class="button-container">
-    <button type="button" (click)="submitForm()">Submit</button>  
-    <button (click)="onPrevious()" [disabled]="activeIndex === 0">Previous</button>
-    <button (click)="onNext()" [disabled]="activeIndex === steps.length - 1">Next</button>
-  </div> -->
-  
-  </div>
-  </div>
+</div>

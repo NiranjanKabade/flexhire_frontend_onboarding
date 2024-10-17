@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  Type,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -6,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
+
 import {
   FormBuilder,
   FormGroup,
@@ -24,6 +31,10 @@ import { CompanyDocumentationComponent } from '../company-documentation/company-
 import { FormDataService } from '../../form-data.service';
 import { HttpClient } from '@angular/common/http';
 
+interface Step {
+  title: string;
+  component: Type<any>;
+}
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -41,71 +52,39 @@ import { HttpClient } from '@angular/common/http';
     CompanyDocumentationComponent,
     ButtonModule,
     StepperModule,
-    StepsModule
+    StepsModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent implements OnInit{
- 
-  activeIndex: number = 0;
-  steps = [
-    { label: 'Company Information'},
-    { label: 'Contact Information'},
-    { label: 'Company Documentation'},
+
+export class DashboardComponent {
+  steps: any = [
+    { title: 'Company Information', component: CompanyInfoComponent },
+    { title: 'Contact Information', component: ContactInfoComponent },
+    { title: 'Comapany Documents', component: CompanyDocumentationComponent },
+    { title: 'Done', content: 'Completed' },
   ];
-  formData: any;
-  showCompanyInfo: boolean = true;
-  showContactInfo: boolean = false;
-  showCompanyDocu: boolean = false;
+  activeStep = 0;
 
-  constructor(private formDataService: FormDataService, private http:HttpClient) {}
-
-  ngOnInit(): void {
-     // Subscribe to the BehaviorSubject to get the form data
-     this.formDataService.formData$.subscribe((data) => {
-      this.formData = data;
-    });
-  }
-
- 
-  onNext() {
-    if (this.showCompanyInfo) {
-      // Validate and store data if needed
-      this.showCompanyInfo = false;
-      this.showContactInfo = true;
-      this.showCompanyDocu = false;
-    }
-     else if (this.showContactInfo) {
-      // Handle final submission logic here if needed
-      this.showCompanyInfo = false;
-      this .showCompanyDocu=true;
-      this.showContactInfo = false;
-      
-    } else if(this.showCompanyDocu){
-      this.submitData();
-    }
-    if (this.activeIndex < this.steps.length - 1) {
-      this.activeIndex++;
+  goToStep(index: number) {
+    if (index === this.steps.length - 1) {
+      this.activeStep = index;
+    } else {
+      this.activeStep = index;
     }
   }
-    
-
-
-
-  submitData() {
-    // Submit all collected data to your backend
-    const companyInfo = this.formDataService.getFormData('company-info');
-    const contactInfo = this.formDataService.getFormData('contactInfo');
-
-    // Make an API call to submit the combined data
-    // Replace 'your-api-endpoint' with your actual API endpoint
-    // this.http.post('your-api-endpoint/submit', { companyInfo, contactInfo })
-    //   .subscribe(response => {
-    //     console.log('Data submitted successfully:', response);
-    //   }, error => {
-    //     console.error('Error submitting data:', error);
-    //   });
+  prevStep() {
+    if (this.activeStep > 0) {
+      this.activeStep--;
+    }
+  }
+  
+  nextStep() {
+    if (this.activeStep < this.steps.length - 1) {
+      this.activeStep++;
+    }
   }
  
+  
 }
