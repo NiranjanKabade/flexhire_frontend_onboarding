@@ -1,27 +1,81 @@
-<div class="login-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-      <h2>Login</h2>
-      <div>
-        <label for="identifier">Email or Mobile Number:</label>
-        <input id="identifier" formControlName="identifier" type="text" />
-        <div *ngIf="loginForm.get('identifier')?.invalid && loginForm.get('identifier')?.touched">
-          <small>Please enter your email or mobile number.</small>
-        </div>
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input id="password" formControlName="password" type="password" />
-        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-          <small>Please enter your password.</small>
-        </div>
-      </div>
-      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <button type="submit" >Login</button>
+<div class="container">
+  <div class="login-container">
+    <form
+      class="form-contanier"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      autocomplete="off"
+    >
+      <img class="logo" src="./assets/V_logo1_TB.png" alt="" />
+      <h2>Employer Login</h2>
 
-      <div class="forgot-password-link">
-        <a (click)="OnForgetPass()">Forgot Password?</a>
+      <mat-form-field appearance="outline">
+        <mat-label>Email or Mobile Number</mat-label>
+        <input
+          matInput
+          placeholder="Email or Mobile Number"
+          formControlName="identifier"
+          autocomplete="off"
+        />
+        <mat-error *ngIf="loginForm.get('identifier')?.hasError('required')">
+          Email or Mobile Number is required.
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('identifier')?.hasError('invalidIdentifier')">
+          Please enter a valid email or mobile number.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          placeholder="Enter your password"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          type="button"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          Password is required.
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Password must be at least 6 characters long.
+        </mat-error>
+      </mat-form-field>
+      <div
+        style="
+          display: flex;
+          justify-content: flex-end;
+          margin-top: -24px;
+          padding: 12px 0;
+        "
+      >
+        <a
+          (click)="navigateTo()"
+          style="
+            color: #3e7194;
+            font-size: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+          "
+          >Forgot Password?</a
+        >
       </div>
+      <button class="login-btn" type="button" (click)="onSubmit()">
+        Login
+      </button>
+
+      <div class="forgot-password-link"></div>
     </form>
   </div>
-  
-  
+</div>

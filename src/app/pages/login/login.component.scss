@@ -1,103 +1,61 @@
+.container {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 .login-container {
-    max-width: 400px;
-    margin: 30px auto;
-    padding: 20px;
-    // background-color: #f9f9f9;
-    // border: 1px solid #ddd;
-    // border-radius: 8px;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button[type="submit"]:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .error-message {
-    color: red;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  .forgot-password-link {
-    text-align: center;
-    margin-top: 15px;
-  }
-  
-  .forgot-password-link a {
-    color: #007bff;
-    text-decoration: none;
-    cursor: pointer;
-  }
+  min-width: 500px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 24px;
+}
 
-  
+.form-contanier {
+  display: flex;
+  flex-direction: column;
+}
+h2 {
+  text-align: center;
+  font-size: 28px;
+  font-family: Futura;
+  margin: 24px 0 36px 0;
+}
+.logo {
+  height: 96px;
+  width: 100%;
+  object-fit: contain;
+}
+.login-btn {
+  border-radius: 8px;
+  min-width: 150px;
+  background-color: #3e7194;
+  border: 0;
+  height: 42px;
+  color: #fff;
+}
+.login-btn:hover {
+  background-color: rgb(77, 123, 154);
+}
+//added by suraj
+.mat-mdc-form-field{
+  margin-bottom: 12px !important;
 
-/* Centering container */
-.login-container {
-    display: flex;
-    justify-content: center; /* Centers horizontally */
-    align-items: center; /* Centers vertically */
-    min-height: 100vh; /* Makes the container full screen height */
-    // background-color: #f0f0f0; /* Optional background color */
-  }
-  
-  /* Styling for the form */
-  form {
-    background: white; /* Form background */
-    padding: 20px; /* Padding inside the form */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for better visibility */
-    width: 800px; /* Fixed width of the form */
-  }
-  
-  h2 {
-    text-align: center; /* Center the heading text */
-  }
-  
-  .error-message {
-    color: red; /* Color for error messages */
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .forgot-password-link {
-    margin-top: 10px;
-    text-align: center; /* Centering the link */
-  }
-  
-  button {
-    width: 100%; /* Make the button full width */
-    margin-top: 15px;
-  }
-  
+}
+.mat-mdc-form-field-flex {
+  height: 48px !important;
+  min-width: 300px;
+}
+.mat-mdc-text-field-wrapper {
+  height: 48px !important;
+}
+.mat-mdc-form-field-infix {
+  height: 48px !important;
+}
+.mdc-text-field--outlined .mat-mdc-form-field-infix,
+.mdc-text-field--no-label .mat-mdc-form-field-infix {
+  padding: 12px 0 !important;
+}
+.mat-mdc-form-field-hint-wrapper, .mat-mdc-form-field-error-wrapper{
+  padding: 0px !important;
+}
