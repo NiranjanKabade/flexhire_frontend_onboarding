@@ -1,4 +1,4 @@
-<div [formGroup]="companyForm" (ngSubmit)="onNext()">
+<form [formGroup]="companyForm" (ngSubmit)="onNext()">
   <div>
     <div class="company-group">
       <h3>Company Information</h3>
@@ -8,69 +8,33 @@
             <input pInputText id="companyName" formControlName="companyName" />
             <label for="companyName">Company Name</label>
           </p-floatLabel>
-          <div
-            *ngIf="f.companyName.touched && f.companyName.invalid"
-            class="error-message"
-          >
-            <small *ngIf="f.companyName.errors?.required"
-              >Company Name is required.</small
-            >
-            <small *ngIf="f.companyName.errors?.minlength"
-              >Must be at least 2 characters long.</small
-            >
-            <small *ngIf="f.companyName.errors?.maxlength"
-              >Cannot exceed 50 characters.</small
-            >
+          <div *ngIf="f.companyName.touched && f.companyName.invalid" class="error-message">
+            <small *ngIf="f.companyName.errors?.required">Company Name is required.</small>
+            <small *ngIf="f.companyName.errors?.minlength">Must be at least 2 characters long.</small>
+            <small *ngIf="f.companyName.errors?.maxlength">Cannot exceed 50 characters.</small>
           </div>
         </div>
 
         <div class="card flex justify-content-center">
           <p-floatLabel>
-            <input
-              pInputText
-              id="businessRegNumber"
-              formControlName="businessRegNumber"
-            />
+            <input pInputText id="businessRegNumber" formControlName="businessRegNumber" />
             <label for="businessRegNumber">Business Registration Number</label>
           </p-floatLabel>
-          <div
-            *ngIf="f.businessRegNumber.touched && f.businessRegNumber.invalid"
-            class="error-message"
-          >
-            <small *ngIf="f.businessRegNumber.errors?.required"
-              >Business Registration Number is required.</small
-            >
-            <small *ngIf="f.businessRegNumber.errors?.pattern"
-              >Invalid registration number.</small
-            >
+          <div *ngIf="f.businessRegNumber.touched && f.businessRegNumber.invalid" class="error-message">
+            <small *ngIf="f.businessRegNumber.errors?.required">Business Registration Number is required.</small>
+            <small *ngIf="f.businessRegNumber.errors?.pattern">Invalid registration number.</small>
           </div>
         </div>
       </div>
       <div class="form-row">
         <div class="card flex justify-content-center">
           <p-floatLabel>
-            <input
-              pInputText
-              id="taxIdentificationNumber"
-              formControlName="taxIdentificationNumber"
-            />
-            <label for="taxIdentificationNumber"
-              >Tax Identification Number (TIN)</label
-            >
+            <input pInputText id="taxIdentificationNumber" formControlName="taxIdentificationNumber" />
+            <label for="taxIdentificationNumber">Tax Identification Number (TIN)</label>
           </p-floatLabel>
-          <div
-            *ngIf="
-              f.taxIdentificationNumber.touched &&
-              f.taxIdentificationNumber.invalid
-            "
-            class="error-message"
-          >
-            <small *ngIf="f.taxIdentificationNumber.errors?.required"
-              >TIN is required.</small
-            >
-            <small *ngIf="f.taxIdentificationNumber.errors?.pattern"
-              >Invalid TIN.</small
-            >
+          <div *ngIf="f.taxIdentificationNumber.touched && f.taxIdentificationNumber.invalid" class="error-message">
+            <small *ngIf="f.taxIdentificationNumber.errors?.required">TIN is required.</small>
+            <small *ngIf="f.taxIdentificationNumber.errors?.pattern">Invalid TIN.</small>
           </div>
         </div>
 
@@ -79,13 +43,8 @@
             <input pInputText id="website" formControlName="website" />
             <label for="website">Website</label>
           </p-floatLabel>
-          <div
-            *ngIf="f.website.touched && f.website.invalid"
-            class="error-message"
-          >
-            <small *ngIf="f.website.errors?.required"
-              >Website is required.</small
-            >
+          <div *ngIf="f.website.touched && f.website.invalid" class="error-message">
+            <small *ngIf="f.website.errors?.required">Website is required.</small>
             <small *ngIf="f.website.errors?.pattern">Enter a valid URL.</small>
           </div>
         </div>
@@ -100,19 +59,10 @@
             <input pInputText id="description" formControlName="description" />
             <label for="description">Description</label>
           </p-floatLabel>
-          <div
-            *ngIf="f.description.touched && f.description.invalid"
-            class="error-message"
-          >
-            <small *ngIf="f.description.errors?.required"
-              >Description is required.</small
-            >
-            <small *ngIf="f.description.errors?.minlength"
-              >Must be at least 10 characters long.</small
-            >
-            <small *ngIf="f.description.errors?.maxlength"
-              >Cannot exceed 500 characters.</small
-            >
+          <div *ngIf="f.description.touched && f.description.invalid" class="error-message">
+            <small *ngIf="f.description.errors?.required">Description is required.</small>
+            <small *ngIf="f.description.errors?.minlength">Must be at least 10 characters long.</small>
+            <small *ngIf="f.description.errors?.maxlength">Cannot exceed 500 characters.</small>
           </div>
         </div>
 
@@ -121,32 +71,26 @@
             <input pInputText id="industry" formControlName="industry" />
             <label for="industry">Industry</label>
           </p-floatLabel>
-          <div
-            *ngIf="f.industry.touched && f.industry.invalid"
-            class="error-message"
-          >
-            <small *ngIf="f.industry.errors?.required"
-              >Industry is required.</small
-            >
+          <div *ngIf="f.industry.touched && f.industry.invalid" class="error-message">
+            <small *ngIf="f.industry.errors?.required">Industry is required.</small>
           </div>
         </div>
       </div>
       <div class="form-row">
         <div class="card flex justify-content-center">
           <p-floatLabel>
-            <input pInputText id="username" />
-            <label for="username">Size</label>
+            <input pInputText id="size" formControlName="size" />
+            <label for="size">Size</label>
           </p-floatLabel>
           <div *ngIf="f.size.touched && f.size.invalid" class="error-message">
-            <small *ngIf="f.size.errors?.required"
-              >Company size is required.</small
-            >
-            <small *ngIf="f.size.errors?.pattern"
-              >Size must be a valid number.</small
-            >
+            <small *ngIf="f.size.errors?.required">Company size is required.</small>
+            <small *ngIf="f.size.errors?.pattern">Size must be a valid number.</small>
           </div>
         </div>
       </div>
     </div>
   </div>
+<div class="button-container">
+  <button type="submit" mat-button color="primary" [disabled]="companyForm.invalid">Next</button>
 </div>
+</form>

@@ -5,17 +5,18 @@
   <div style="flex: 3; padding: 20px; background-color: #f2f2f2;">
   
   <ng-container [ngSwitch]="activeIndex">
-    <app-company-info *ngSwitchCase="0" (save)="onNext('companyInfo', $event)"></app-company-info>
-    <app-contact-info *ngSwitchCase="1" (save)="onNext('contactInfo', $event)"></app-contact-info>
-    <app-company-documentation *ngSwitchCase="2" (save)="onNext('companyDocs', $event)"
-    (submit)="submitForm()"></app-company-documentation>
-
-  </ng-container>
-  <div class="button-container">
-    <!-- <button type="button" (click)="submitForm()">Submit</button> -->
-    <button (click)="onPrevious()" [disabled]="activeIndex === 0">Previous</button>
-    <button (click)="onNext('currentStep', 'currentFormData')" [disabled]="activeIndex === steps.length - 1">Next</button>
+    <div *ngIf="showCompanyInfo"><app-company-info *ngSwitchCase="0" (next)="onNext()"></app-company-info></div>
+    <div *ngIf="showContactInfo"><app-contact-info *ngSwitchCase="1" (next)="onNext()"></app-contact-info>
+    </div>
+    <div *ngIf="showCompanyDocu">
+    <app-company-documentation *ngSwitchCase="2" (next)="onNext()"></app-company-documentation>
   </div>
+  </ng-container>
+  <!-- <div class="button-container">
+    <button type="button" (click)="submitForm()">Submit</button>  
+    <button (click)="onPrevious()" [disabled]="activeIndex === 0">Previous</button>
+    <button (click)="onNext()" [disabled]="activeIndex === steps.length - 1">Next</button>
+  </div> -->
   
   </div>
   </div>

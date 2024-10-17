@@ -1,50 +1,91 @@
-
+<form>
 <div class="document-group">
-    <h2>Company Documents</h2>
+  <h2>Company Documents</h2>
+  <div class="form-row">
     <div class="ic">
-        <h4>Incorporation Documents</h4>
-        <div class="card flex justify-content-center">
-            <p-toast />
-            <p-fileUpload 
-                mode="basic" 
-                chooseLabel="Choose" 
-                chooseIcon="pi pi-upload"
-                name="demo[]" 
-                url="https://www.primefaces.org/cdn/api/upload.php" 
-                accept="image/*" 
-                maxFileSize="1000000" 
-                (onUpload)="onUpload()" />
-        </div>
+      <h4>Incorporation Documents</h4>
+      <div class="card flex justify-content-center">
+        <p-toast />
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          accept="image/*"
+          maxFileSize="1000000"
+          (onUpload)="onUpload()"
+        />
+      </div>
     </div>
     <div class="bl">
-        <h4>Business License</h4>
-        <div class="card flex justify-content-center">
-            <p-toast />
-            <p-fileUpload 
-                mode="basic" 
-                chooseLabel="Choose" 
-                chooseIcon="pi pi-upload"
-                name="demo[]" 
-                url="https://www.primefaces.org/cdn/api/upload.php" 
-                accept="image/*" 
-                maxFileSize="1000000" 
-                (onUpload)="onUpload()" />
-        </div>
+      <h4>Business License</h4>
+      <div class="card flex justify-content-center">
+        <p-toast />
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          accept="image/*"
+          maxFileSize="1000000"
+          (onUpload)="onUpload()"
+        />
+      </div>
     </div>
-    <div class="id">
-        <h4>Insurance Documents</h4>
-        <div class="card flex justify-content-center">
-            <p-toast />
-            <p-fileUpload 
-                mode="basic" 
-                chooseLabel="Choose" 
-                chooseIcon="pi pi-upload"
-                name="demo[]" 
-                url="https://www.primefaces.org/cdn/api/upload.php" 
-                accept="image/*" 
-                maxFileSize="1000000" 
-                (onUpload)="onUpload()" />
-        </div>
-    </div>
-    <button (click)="submitForm()">Submit</button>
   </div>
+  <div class="form-row">
+    <div class="id">
+      <h4>Insurance Documents</h4>
+      <div class="card flex justify-content-center">
+        <p-toast />
+        <p-fileUpload
+          mode="basic"
+          chooseLabel="Choose"
+          chooseIcon="pi pi-upload"
+          name="demo[]"
+          url="https://www.primefaces.org/cdn/api/upload.php"
+          accept="image/*"
+          maxFileSize="1000000"
+          (onUpload)="onUpload()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="button-container">
+    <button type="submit" [disabled]="finalForm.invalid">
+      Submit All Data
+    </button>
+  </div>
+</div>
+</form>
+
+<!-- <form [formGroup]="finalForm" (ngSubmit)="onSubmitAll()">
+    <div>
+      <label for="file1">Upload File 1:</label>
+      <input id="file1" type="file" (change)="onFileChange($event, 'file1')" />
+      <div *ngIf="finalForm.get('file1')?.invalid && finalForm.get('file1')?.touched">
+        File 1 is required.
+      </div>
+    </div>
+  
+    <div>
+      <label for="file2">Upload File 2:</label>
+      <input id="file2" type="file" (change)="onFileChange($event, 'file2')" />
+      <div *ngIf="finalForm.get('file2')?.invalid && finalForm.get('file2')?.touched">
+        File 2 is required.
+      </div>
+    </div>
+  
+    <div>
+      <label for="file3">Upload File 3:</label>
+      <input id="file3" type="file" (change)="onFileChange($event, 'file3')" />
+      <div *ngIf="finalForm.get('file3')?.invalid && finalForm.get('file3')?.touched">
+        File 3 is required.
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="finalForm.invalid">Submit All Data</button>
+  </form>
+   -->

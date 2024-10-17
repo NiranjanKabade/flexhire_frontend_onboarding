@@ -7,11 +7,27 @@
     background-color: #fff;
 }
 
+.form-row{
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: 24px; */
+    /* margin: 36px; */
+    justify-content: space-between;
+    /* width: 50%; */
+  }
+
 .justify-content-center {
     justify-content: center !important;
     width: 48%;
     margin-bottom: 24px;
 }
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 0;
+  }
 
 button {
     background-color: #007bff;

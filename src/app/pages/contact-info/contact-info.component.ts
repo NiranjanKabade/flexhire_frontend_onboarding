@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FormDataService } from '../../form-data.service';
 import { InputTextModule } from 'primeng/inputtext';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-info',
@@ -20,57 +22,46 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class ContactInfoComponent implements OnInit{
 
-  @Output() save = new EventEmitter<any>();
+  @Output() next = new EventEmitter<void>();
   contactForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private formDataService: FormDataService) {
-    this.contactForm = this.fb.group({
-      contacts: this.fb.array([this.createContact()])
-    });
 
-    // // Load cached data
-    // const cachedData = this.formDataService.getFormData('contactInfo');
-    // if (cachedData) {
-    //   this.contactForm.patchValue(cachedData);
-    // }
+  constructor(private fb: FormBuilder, private formDataService: FormDataService, private http: HttpClient,  private router: Router) {
+    // Initialize the FormArray with one contact form
+  this.contactForm = this.fb.group({
+    contacts: this.fb.array([this.createContact()]), // Start with one contact
+  });
   }
 
+  ngOnInit(): void {}
 
-  onSave() {
-    if (this.contactForm.valid) {
-      this.formDataService.updateFormData('contactInfo', this.contactForm.value);
-    }
-  }
+  // onSave() {
+  //   if (this.contactForm.valid) {
+  //     this.formDataService.updateFormData('contactInfo', this.contactForm.value);
+  //   }
+  // }
 
-  ngOnInit(): void {
-    this.addContact()
-  }
+
 
   get contacts(): FormArray {
-    return this.contactForm.get('contacts') as FormArray;
+    return this.contactForm.get('contacts') as FormArray; // Ensure this returns a FormArray
   }
 
-  // Method to create a new FormGroup for a contact
+  // // Method to create a new FormGroup for a contact
   createContact(): FormGroup {
     return this.fb.group({
       address: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Example: 10 digit phone number
-      emailAddress: ['', [Validators.required, Validators.email]], // Email validation
-      position: ['', Validators.required]
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      emailAddress: ['', [Validators.required, Validators.email]],
+      position: ['', Validators.required],
     });
-  }
-  onNext() {
-    if (this.contactForm.valid) {
-      this.save.emit(this.contactForm.value);
-      console.log(this.contactForm.value);
-    } else {
-      this.contactForm.markAllAsTouched();
-    }
   }
 
   addContact(): void {
+    // Make sure contacts is not null before calling push
     this.contacts.push(this.createContact());
   }
+  
 
   removeContact(index: number): void {
     if (this.contacts.length > 1) {
@@ -78,12 +69,31 @@ export class ContactInfoComponent implements OnInit{
     }
   }
 
-  // onSubmit(): void {
-  //   if (this.contactForm.valid) {
-  //     console.log(this.contactForm.value);
-  //   } else {
-  //     console.error('Form is invalid');
-  //   }
-  // }
+  onNext() {
+    if (this.contactForm.valid) {
+      // Save form data to the service
+      this.formDataService.updateFormData('contact-info', this.contactForm.value);
+      this.next.emit(); // Emit the next event
+      console.log("Data saved successfully for Component One");
+      // this.router.navigate(['/company-document']);
 
-}
+      // Make an API call to save the data of this specific component
+      // this.http.post('your-api-endpoint/componentTwo', this.contactForm.value).subscribe(
+      //   response => {
+      //     console.log('Data saved successfully for Component Two:', response);
+      //   },
+      //   error => {
+      //     console.error('Error saving data for Component Two:', error);
+      //   }
+      // );
+    } else {
+      console.log('Form is not valid');
+    }
+  }
+
+ 
+  }
+
+
+
+

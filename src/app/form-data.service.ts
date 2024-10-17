@@ -3,65 +3,33 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-interface FormData {
-  companyInfo: any;
-  contactInfo: any;
-  companyDocs: any;
-}
-
 @Injectable({
   providedIn: 'root',
 })
 export class FormDataService {
-  private initialFormData: FormData  = {
-    companyInfo: null,
-    contactInfo: null,
-    companyDocs: null,
-  
-  };
+  private componentFormData = new BehaviorSubject<any>({});
+  formData$ = this.componentFormData.asObservable();
 
-  private formDataSubject = new BehaviorSubject<any>(this.initialFormData);
-  formData$ = this.formDataSubject.asObservable();
-
-   // Update the form data with the latest step's data
-   updateFormData(step: string, data: any) {
-    const currentData = this.formDataSubject.value;
-    const updatedData = { ...currentData, [step]: data };
-    this.formDataSubject.next(updatedData);
+  // Update the form data with the latest step's data
+  updateFormData(step: string, data: any): void {
+    const currentData = this.componentFormData.value;
+    this.componentFormData.next({ ...currentData, [step]: data });
+    console.log(data);
+    
   }
 
   // Get the current form data
-  getFormData() {
-    return this.formDataSubject.value;
+  getFormData(step: string):any {
+    return this.componentFormData.value;
   }
 
-  // constructor(
-  //   private http: HttpClient,
-  //   @Inject(PLATFORM_ID) private platformId: Object
-  // ) {}
+   // Method to get all data
+   getAllData(): any {
+    return this.componentFormData.getValue();
+  }
 
-  // setFormData(step: string, data: any) {
-  //   const currentData = this.formData.value;
-  //   currentData[step] = data;
-  //   this.formData.next(currentData);
-
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     localStorage.setItem('formData', JSON.stringify(currentData));
-  //   }
-  // }
-
-  // getFormData(step: string) {
-  //   if (isPlatformBrowser(this.platformId)) {
-  //     const storedData = localStorage.getItem('formData');
-  //     if (storedData) {
-  //       return JSON.parse(storedData)[step];
-  //     }
-  //   }
-  //   return this.formData.value[step];
-  // }
-
-  // submitData() {
-  //   const data = this.formData.value;
-  //   return this.http.post('http://your-django-api-url.com/submit', data);
-  // }
+  // Method to clear form data (if needed)
+  clearData(): void {
+    this.componentFormData.next({});
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -22,6 +22,7 @@ import { StepperModule } from 'primeng/stepper';
 import { StepsModule } from 'primeng/steps';
 import { CompanyDocumentationComponent } from '../company-documentation/company-documentation.component';
 import { FormDataService } from '../../form-data.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,7 +46,7 @@ import { FormDataService } from '../../form-data.service';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
  
   activeIndex: number = 0;
   steps = [
@@ -53,43 +54,58 @@ export class DashboardComponent {
     { label: 'Contact Information'},
     { label: 'Company Documentation'},
   ];
+  formData: any;
+  showCompanyInfo: boolean = true;
+  showContactInfo: boolean = false;
+  showCompanyDocu: boolean = false;
 
-  constructor(private formDataService: FormDataService) {}
+  constructor(private formDataService: FormDataService, private http:HttpClient) {}
 
+  ngOnInit(): void {
+     // Subscribe to the BehaviorSubject to get the form data
+     this.formDataService.formData$.subscribe((data) => {
+      this.formData = data;
+    });
+  }
 
-  // saveCurrentFormData(step: string, data: any) {
-  //   // Save data to cache (BehaviorSubject) and localStorage
-  //   this.formDataService.setFormData(step, data);
-  // }
-
-  
-  onNext(step: string, data: any) {
-    this.formDataService.updateFormData(step as keyof FormData, data);
+ 
+  onNext() {
+    if (this.showCompanyInfo) {
+      // Validate and store data if needed
+      this.showCompanyInfo = false;
+      this.showContactInfo = true;
+      this.showCompanyDocu = false;
+    }
+     else if (this.showContactInfo) {
+      // Handle final submission logic here if needed
+      this.showCompanyInfo = false;
+      this .showCompanyDocu=true;
+      this.showContactInfo = false;
+      
+    } else if(this.showCompanyDocu){
+      this.submitData();
+    }
     if (this.activeIndex < this.steps.length - 1) {
       this.activeIndex++;
     }
   }
+    
 
 
-  onPrevious() {
-    if (this.activeIndex > 0) {
-      this.activeIndex--;
-    }
-  }
 
-  // submitForm() {
-  //   this.formDataService.submitData().subscribe({
-  //     next: (response) => {
-  //       console.log('Form submitted successfully!', response);
-  //     },
-  //     error: (err) => {
-  //       console.error('Error submitting form', err);
-  //     },
-  //   });
-  // }
+  submitData() {
+    // Submit all collected data to your backend
+    const companyInfo = this.formDataService.getFormData('company-info');
+    const contactInfo = this.formDataService.getFormData('contactInfo');
 
-  submitForm() {
-    // Delegate the submit action to the documentation component or directly handle here
+    // Make an API call to submit the combined data
+    // Replace 'your-api-endpoint' with your actual API endpoint
+    // this.http.post('your-api-endpoint/submit', { companyInfo, contactInfo })
+    //   .subscribe(response => {
+    //     console.log('Data submitted successfully:', response);
+    //   }, error => {
+    //     console.error('Error submitting data:', error);
+    //   });
   }
  
 }
