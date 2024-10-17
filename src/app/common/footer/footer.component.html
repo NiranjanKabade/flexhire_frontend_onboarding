@@ -1,0 +1,76 @@
+<footer style="background-color: #3D3F4A;">
+    <div class="footer">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 p-0">
+          <div class="footer-section">
+            <a href="#"><img src="./assets/logo.png" height="15px" /></a><br />
+            <p class="social-icon">
+              <a href="#"><img src="./assets/WhatsApp_icon.png" height="30" /></a
+              >
+              <a href="#"><img src="./assets/Facebook_logo.png" height="28" /></a
+              >
+              <a href="#"><img src="./assets/Instagram_icon.png" height="28" /></a>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-3" style="padding: 20px">
+          <ul class="pmd-footer-nav flex-column">
+            <li><h5>Company</h5></li>
+            <li>
+              <a
+                (click)="onClick('1', 'home')"
+                [ngClass]="isActive == '1' ? 'active-bg' : ''"
+                [ngStyle]="{ color: isActive == 1 ? 'red' : '' }"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                (click)="onClick('2', 'about')"
+                [ngClass]="isActive == '2' ? 'active-bg' : ''"
+                [ngStyle]="{ color: isActive == 2 ? 'red' : '' }"
+                >About</a
+              >
+            </li>
+            <li>
+              <a
+                (click)="onClick('3', 'services')"
+                [ngClass]="isActive == '3' ? 'active-bg' : ''"
+                [ngStyle]="{ color: isActive == 3 ? 'red' : '' }"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                (click)="onClick('4', 'contact')"
+                [ngClass]="isActive == '4' ? 'active-bg' : ''"
+                [ngStyle]="{ color: isActive == 4 ? 'red' : '' }"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+    
+        <div class="col-md-4" style="padding: 20px 0">
+          <ul class="pmd-footer-nav flex-column">
+            <li><h5>Support</h5></li>
+            <li>
+              <a
+                (click)="onClick('5', 'contact')"
+                [ngClass]="isActive == '5' ? 'active-bg' : ''"
+                [ngStyle]="{ color: isActive == 5 ? 'red' : '' }"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    
+      <div
+        class="bottom copyright"
+        style="border-top: 1px solid grey"
+    >
+        &#xa9; 2024 FLEX HIRE Pvt. Ltd.
+      </div>
+    </div>
+    </footer>

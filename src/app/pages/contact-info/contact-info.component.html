@@ -1,0 +1,78 @@
+<div [formGroup]="contactForm" (ngSubmit)="onNext()">
+  <div
+    formArrayName="contacts"
+    *ngFor="let contact of contacts.controls; let i = index"
+  >
+    <div [formGroupName]="i" class="contact-group">
+      <h3>Contact {{ i + 1 }}</h3>
+      <button mat-button color="primary" (click)="addContact()">
+        Add Another Contact
+      </button>
+
+      <div class="form-row">
+        <div class="card flex justify-content-center">
+          <p-floatLabel>
+            <input pInputText id="address-{{ i }}" formControlName="address" />
+            <label for="address-{{ i }}">Address</label>
+          </p-floatLabel>
+          <div *ngIf="contact.get('address')?.touched && contact.get('address')?.invalid" class="error-message">
+            <small *ngIf="contact.get('address')!.errors?.['required']">Address is required.</small>
+          </div>
+        </div>
+        <div class="card flex justify-content-center">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="phoneNumber-{{ i }}"
+              formControlName="phoneNumber"
+            />
+            <label for="phoneNumber-{{ i }}">Phone Number</label>
+          </p-floatLabel>
+          <div *ngIf="contact.get('phoneNumber')?.touched && contact.get('phoneNumber')?.invalid" class="error-message">
+            <small *ngIf="contact.get('phoneNumber')!.errors?.['required']">Phone Number is required.</small>
+            <small *ngIf="contact.get('phoneNumber')!.errors?.['pattern']">Phone Number must be 10 digits.</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="card flex justify-content-center">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="emailAddress-{{ i }}"
+              formControlName="emailAddress"
+            />
+            <label for="emailAddress-{{ i }}">Email Address</label>
+          </p-floatLabel>
+          <div *ngIf="contact.get('emailAddress')?.touched && contact.get('emailAddress')?.invalid" class="error-message">
+            <small *ngIf="contact.get('emailAddress')!.errors?.['required']">Email Address is required.</small>
+            <small *ngIf="contact.get('emailAddress')!.errors?.['email']">Invalid email address.</small>
+          </div>
+        </div>
+        <div class="card flex justify-content-center">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="position-{{ i }}"
+              formControlName="position"
+            />
+            <label for="position-{{ i }}">Position</label>
+          </p-floatLabel>
+          <div *ngIf="contact.get('position')?.touched && contact.get('position')?.invalid" class="error-message">
+            <small *ngIf="contact.get('position')!.errors?.['required']">Position is required.</small>
+          </div>
+        </div>
+      </div>
+
+      <button
+        mat-button
+        color="warn"
+        (click)="removeContact(i)"
+        *ngIf="contacts.length > 1"
+      >
+        Remove Contact
+      </button>
+    </div>
+  </div>
+</div>

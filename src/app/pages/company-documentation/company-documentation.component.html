@@ -1,0 +1,50 @@
+
+<div class="document-group">
+    <h2>Company Documents</h2>
+    <div class="ic">
+        <h4>Incorporation Documents</h4>
+        <div class="card flex justify-content-center">
+            <p-toast />
+            <p-fileUpload 
+                mode="basic" 
+                chooseLabel="Choose" 
+                chooseIcon="pi pi-upload"
+                name="demo[]" 
+                url="https://www.primefaces.org/cdn/api/upload.php" 
+                accept="image/*" 
+                maxFileSize="1000000" 
+                (onUpload)="onUpload()" />
+        </div>
+    </div>
+    <div class="bl">
+        <h4>Business License</h4>
+        <div class="card flex justify-content-center">
+            <p-toast />
+            <p-fileUpload 
+                mode="basic" 
+                chooseLabel="Choose" 
+                chooseIcon="pi pi-upload"
+                name="demo[]" 
+                url="https://www.primefaces.org/cdn/api/upload.php" 
+                accept="image/*" 
+                maxFileSize="1000000" 
+                (onUpload)="onUpload()" />
+        </div>
+    </div>
+    <div class="id">
+        <h4>Insurance Documents</h4>
+        <div class="card flex justify-content-center">
+            <p-toast />
+            <p-fileUpload 
+                mode="basic" 
+                chooseLabel="Choose" 
+                chooseIcon="pi pi-upload"
+                name="demo[]" 
+                url="https://www.primefaces.org/cdn/api/upload.php" 
+                accept="image/*" 
+                maxFileSize="1000000" 
+                (onUpload)="onUpload()" />
+        </div>
+    </div>
+    <button (click)="submitForm()">Submit</button>
+  </div>

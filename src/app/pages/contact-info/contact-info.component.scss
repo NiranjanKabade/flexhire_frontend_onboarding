@@ -1,0 +1,32 @@
+.contact-group {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+
+.form-row{
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 24px; */
+  /* margin: 36px; */
+  justify-content: space-between;
+}
+
+.form-field {
+  flex: 1; /* Distribute space equally */
+  min-width: 200px; /* Minimum width to prevent fields from becoming too narrow */
+}
+
+.justify-content-center {
+  justify-content: center !important;
+  width: 48%;
+  margin-top: 36px;
+}
+
+small{
+  color: red;
+}

@@ -1,0 +1,39 @@
+.company-group {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+
+.form-row{
+  display: flex;
+  flex-wrap: wrap;
+  /* gap: 24px; */
+  /* margin: 36px; */
+  justify-content: space-between;
+  /* width: 50%; */
+}
+
+.form-field {
+  flex: 1; /* Make the field take up equal space */
+  min-width: 200px; /* Ensure the fields don't shrink too much */
+}
+
+
+.justify-content-center {
+    justify-content: center !important;
+    width: 48%;
+    margin-top: 36px;
+}
+
+small {
+  color: #ff0000; /* Bootstrap danger color (red) */
+  font-size: 0.875rem; /* Slightly smaller font size */
+  margin-top: 0.25rem; /* Space above the error message */
+  margin-bottom: 0.5rem; /* Space below the error message */
+  font-weight: 400; /* Normal font weight */
+}
+

@@ -1,0 +1,27 @@
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <h2>Login</h2>
+      <div>
+        <label for="identifier">Email or Mobile Number:</label>
+        <input id="identifier" formControlName="identifier" type="text" />
+        <div *ngIf="loginForm.get('identifier')?.invalid && loginForm.get('identifier')?.touched">
+          <small>Please enter your email or mobile number.</small>
+        </div>
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input id="password" formControlName="password" type="password" />
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <small>Please enter your password.</small>
+        </div>
+      </div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+      <button type="submit" >Login</button>
+
+      <div class="forgot-password-link">
+        <a (click)="OnForgetPass()">Forgot Password?</a>
+      </div>
+    </form>
+  </div>
+  
+  
