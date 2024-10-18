@@ -35,6 +35,8 @@ export class LoginComponent {
       this.authService.login(identifier, password).subscribe({
         next: response => {
           console.log('Login successful', response);
+          localStorage.setItem('acess_token', response.access);
+          localStorage.setItem('refresh_token', response.refresh);
           // // Navigate to a different page or do something else
           this.router.navigate(['/dashboard']);
         },
