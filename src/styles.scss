@@ -108,11 +108,14 @@ p-fileupload{
   width: 50%;
 }
 
-.mat-mdc-form-field-hint-wrapper .mat-mdc-form-field-error-wrapper {
-  position: absolute;
+mat-mdc-form-field-error-wrapper {
   top: 0;
   left: 0;
   right: 0;
 }
 
-
+mat-mdc-text-field-wrapper {
+  width: 100%;
+  z-index: 0;
+  height: 48px !important;
+}

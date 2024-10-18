@@ -26,6 +26,11 @@
     padding: 20px 0;
   }
 
+h4{
+  font-size: 18px;
+  margin-top: 36px;
+}
+
 button {
     background-color: #007bff;
     color: white;
@@ -36,7 +41,6 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 20px;
   }
 
   .file-drop-zone {
@@ -47,7 +51,7 @@ button {
     position: relative;
     transition: background-color 0.3s ease;
     width: 100%;
-    height: 200px;
+    height: 172px;
   }
   
   .file-drop-zone:hover {
@@ -59,7 +63,6 @@ button {
   }
   
   .upload-button {
-    margin-top: 20px;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -73,7 +76,6 @@ button {
   
   .choose-button,
 .upload-button {
-  margin-top: 20px;
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
