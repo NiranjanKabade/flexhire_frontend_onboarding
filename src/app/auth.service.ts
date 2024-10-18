@@ -23,9 +23,9 @@ export class AuthService {
   login(identifier: string, password: string): Observable<any> {
     return this.http.post<any>(this.apiUrl, { identifier, password }).pipe(
       tap((response) => {
-        if (response.access_token) {
-          localStorage.setItem(this.tokenKey, response.access_token);
-          localStorage.setItem(this.refreshTokenKey, response.refresh_token);
+        if (response.access) {
+          localStorage.setItem(this.tokenKey, response.access);
+          localStorage.setItem(this.refreshTokenKey, response.refresh);
           this.isLoggedIn.next(true);
           
         }

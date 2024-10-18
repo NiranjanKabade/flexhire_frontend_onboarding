@@ -11,16 +11,30 @@
 
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <p-floatLabel>
+          <!-- <p-floatLabel>
             <input pInputText id="address-{{ i }}" formControlName="address" />
             <label for="address-{{ i }}">Address</label>
           </p-floatLabel>
           <div *ngIf="contact.get('address')?.touched && contact.get('address')?.invalid" class="error-message">
             <small *ngIf="contact.get('address')!.errors?.['required']">Address is required.</small>
-          </div>
+          </div> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Address</mat-label>
+            <input
+              matInput
+              id="address-{{ i }}"
+              placeholder="Enter your Address"
+              formControlName="address"
+            />
+            
+    
+            <mat-error *ngIf="contact.get('address')?.hasError('required')">
+              Address is required.
+            </mat-error>
+          </mat-form-field>
         </div>
         <div class="card flex justify-content-center">
-          <p-floatLabel>
+          <!-- <p-floatLabel>
             <input
               pInputText
               id="phoneNumber-{{ i }}"
@@ -31,13 +45,30 @@
           <div *ngIf="contact.get('phoneNumber')?.touched && contact.get('phoneNumber')?.invalid" class="error-message">
             <small *ngIf="contact.get('phoneNumber')!.errors?.['required']">Phone Number is required.</small>
             <small *ngIf="contact.get('phoneNumber')!.errors?.['pattern']">Phone Number must be 10 digits.</small>
-          </div>
+          </div> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Phone Number"
+              id="phoneNumber-{{ i }}"
+              formControlName="phoneNumber"
+            />
+            
+    
+            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('required')">
+              Phone Number is required.
+            </mat-error>
+            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('pattern')">
+              Phone Number must be 10 digits.
+            </mat-error>
+          </mat-form-field>
         </div>
       </div>
 
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <p-floatLabel>
+          <!-- <p-floatLabel>
             <input
               pInputText
               id="emailAddress-{{ i }}"
@@ -48,10 +79,27 @@
           <div *ngIf="contact.get('emailAddress')?.touched && contact.get('emailAddress')?.invalid" class="error-message">
             <small *ngIf="contact.get('emailAddress')!.errors?.['required']">Email Address is required.</small>
             <small *ngIf="contact.get('emailAddress')!.errors?.['email']">Invalid email address.</small>
-          </div>
+          </div> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Email Address</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Email Address"
+              id="emailAddress-{{ i }}"
+              formControlName="emailAddress"
+            />
+            
+    
+            <mat-error *ngIf="contact.get('emailAddress')?.hasError('required')">
+              Email Address is required.
+            </mat-error>
+            <mat-error *ngIf="contact.get('emailAddress')?.hasError('email')">
+              Invalid email address.
+            </mat-error>
+          </mat-form-field>
         </div>
         <div class="card flex justify-content-center">
-          <p-floatLabel>
+          <!-- <p-floatLabel>
             <input
               pInputText
               id="position-{{ i }}"
@@ -61,7 +109,22 @@
           </p-floatLabel>
           <div *ngIf="contact.get('position')?.touched && contact.get('position')?.invalid" class="error-message">
             <small *ngIf="contact.get('position')!.errors?.['required']">Position is required.</small>
-          </div>
+          </div> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Position</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Position"
+              id="emailAddress-{{ i }}"
+              formControlName="position"
+            />
+            
+    
+            <mat-error *ngIf="contact.get('position')?.hasError('required')">
+              Position is required.
+            </mat-error>
+            
+          </mat-form-field>
         </div>
       </div>
 
@@ -75,7 +138,7 @@
       </button>
     </div>
   </div>
-  <div class="button-container">
+  <!-- <div class="button-container">
   <button type="submit" mat-button color="primary" [disabled]="contactForm.invalid">Next</button>
-  </div>
+  </div> -->
 </form>
