@@ -36,6 +36,7 @@ export class CompanyInfoComponent implements OnInit {
   // @Output() next: EventEmitter<void> = new EventEmitter();
   // @Output() prev: EventEmitter<void> = new EventEmitter();
   @Input() next!: () => void; // Input for the next function
+  @Input() previous!: () => void; 
 
   companyForm: FormGroup;
 
@@ -126,6 +127,13 @@ export class CompanyInfoComponent implements OnInit {
     } else {
       this.companyForm.markAllAsTouched();
       return
+    }
+  }
+
+   // Method to handle the previous button click
+   onPrevious() {
+    if (this.previous) {
+      this.previous(); // Call the injected previous function
     }
   }
 }

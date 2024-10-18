@@ -23,6 +23,8 @@ import { FormDataService } from '../../services/form-data.service';
 export class ContactInfoComponent implements OnInit{
 
   @Input() next!: () => void; // Input for the next function
+  @Input() previous!: () => void; 
+
 
   contactForm: FormGroup;
 
@@ -83,6 +85,12 @@ export class ContactInfoComponent implements OnInit{
       }
     }
  
+    // Method to handle the previous button click
+   onPrevious() {
+    if (this.previous) {
+      this.previous(); // Call the injected previous function
+    }
+  }
   }
 
 

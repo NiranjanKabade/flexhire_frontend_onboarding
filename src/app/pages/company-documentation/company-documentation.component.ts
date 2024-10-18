@@ -27,6 +27,7 @@ export class CompanyDocumentationComponent {
   insuranceFile: File | null = null;
 
   @Input() next!: () => void; // Input for the next function
+  @Input() previous!: () => void; 
 
 
   constructor(private http:HttpClient, private messageService:MessageService){}
@@ -94,13 +95,18 @@ export class CompanyDocumentationComponent {
   }
 
   onNext() {
-    // if (this.contactForm.invalid) {
-    //   // Call the injected next function from the DashboardComponent
-    //   this.next(); // Call the injected next function
-    // } else {
-    //   alert('Please fill in all required fields.');
-    // }
-    this.next(); // Call the injected next function
+    if (this.incorporationFile && this.businessLicenseFile && this.insuranceFile) {
+      // Call the injected next function from the DashboardComponent
+      this.next(); // Call the injected next function
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  }
 
+   // Method to handle the previous button click
+   onPrevious() {
+    if (this.previous) {
+      this.previous(); // Call the injected previous function
+    }
   }
 }

@@ -4,18 +4,14 @@
     *ngFor="let contact of contacts.controls; let i = index"
   >
     <div [formGroupName]="i" class="contact-group">
-      <div class="contact-container"> 
+      <div class="contact-container">
         <h3>Contact {{ indexToWord(i) }}</h3>
         <div class="btn-add-remove">
-        
-      <a
-      (click)="removeContact(i)"
-      *ngIf="contacts.length > 1"
-    >
-      <img src="./assets/delete.svg" height="32">
-  </a></div>
-</div>
-    
+          <a (click)="removeContact(i)" *ngIf="contacts.length > 1">
+            <img src="./assets/delete.svg" height="24" />
+          </a>
+        </div>
+      </div>
 
       <div class="form-row">
         <div class="card flex justify-content-center">
@@ -90,14 +86,126 @@
           </mat-form-field>
         </div>
       </div>
-
-      
     </div>
   </div>
+
+  <!-- <div
+    formArrayName="hrcontacts"
+    *ngFor="let contact of contacts.controls; let i = index">
+    <div [formGroupName]="i" class="contact-group">
+      <div class="contact-container">
+        <h3>HR Contact {{ indexToWord(i) }}</h3>
+        <div class="btn-add-remove">
+          <a (click)="removeContact(i)" *ngIf="contacts.length > 1">
+            <img src="./assets/delete.svg" height="24" />
+          </a>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              id="firstName-{{ i }}"
+              placeholder="Enter your firstname"
+              formControlName="firstName"
+            />
+
+            <mat-error *ngIf="contact.get('firstName')?.hasError('required')">
+              First Name is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input
+              matInput
+              id="lastName-{{ i }}"
+              placeholder="Enter your lastname"
+              formControlName="lastName"
+            />
+
+            <mat-error *ngIf="contact.get('lastName')?.hasError('required')">
+              Last Name is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+      </div>
+
+      <div class="form-row">
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Phone Number"
+              id="phoneNumber-{{ i }}"
+              formControlName="phoneNumber"
+            />
+
+            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('required')">
+              Phone Number is required.
+            </mat-error>
+            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('pattern')">
+              Phone Number must be 10 digits.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>Email Address</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Email Address"
+              id="emailAddress-{{ i }}"
+              formControlName="emailAddress"
+            />
+
+            <mat-error
+              *ngIf="contact.get('emailAddress')?.hasError('required')"
+            >
+              Email Address is required.
+            </mat-error>
+            <mat-error *ngIf="contact.get('emailAddress')?.hasError('email')">
+              Invalid email address.
+            </mat-error>
+          </mat-form-field>
+        </div>
+       
+      </div>
+
+      <div class="form-row">
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>Position</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Position"
+              id="emailAddress-{{ i }}"
+              formControlName="position"
+            />
+
+            <mat-error *ngIf="contact.get('position')?.hasError('required')">
+              Position is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
   <a class="btn-add">
-    <button (click)="addContact()">Add</button>
+    <button type="button" (click)="addContact()">Add</button>
   </a>
   <!-- <div class="button-container">
   <button type="submit" mat-button color="primary" [disabled]="contactForm.invalid">Next</button>
   </div> -->
+  <div class="button-container">
+    <button type="button" (click)="onPrevious()">Previous</button>
+    <button type="button" (click)="onNext()">Next</button>
+  </div>
 </form>

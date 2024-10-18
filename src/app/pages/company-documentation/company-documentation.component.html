@@ -1,66 +1,93 @@
 <form>
   <div class="document-group">
-    <h2 >Company Documents</h2>
-    
+    <h2>Company Documents</h2>
+
     <div class="ic">
       <h4>Incorporation Documents</h4>
       <div class="card flex justify-content-center">
         <p-toast></p-toast>
-        <div class="file-drop-zone"
-             (dragover)="onDragOver($event)"
-             (dragleave)="onDragLeave($event)"
-             (drop)="onDrop($event, 'incorporation')">
-          <img src="./assets/icons-upload.png" alt="" (click)="incorporationFileInput.click()">
-          <p *ngIf="!incorporationFile">Drag & Drop your files here or click to upload</p>
+        <div
+          class="file-drop-zone"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event, 'incorporation')"
+          (click)="incorporationFileInput.click()"
+        >
+          <img src="./assets/icons-upload.png" alt="" />
+          <p *ngIf="!incorporationFile">
+            Drag & Drop your files here or click to upload
+          </p>
           <p *ngIf="incorporationFile">{{ incorporationFile.name }}</p>
-          <input type="file" #incorporationFileInput (change)="onFileSelected($event, 'incorporation')" hidden>
-          <button type="button" class="upload-button" (click)="incorporationFileInput.click()">Choose File</button>
+          <input
+            type="file"
+            #incorporationFileInput
+            (change)="onFileSelected($event, 'incorporation')"
+            hidden
+          />
+          <!-- <button type="button" class="upload-button" (click)="incorporationFileInput.click()">Choose File</button> -->
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
         </div>
       </div>
     </div>
-
+    <hr />
     <div class="bl">
       <h4>Business License</h4>
       <div class="card flex justify-content-center">
         <p-toast></p-toast>
-        <div class="file-drop-zone"
-             (dragover)="onDragOver($event)"
-             (dragleave)="onDragLeave($event)"
-             (drop)="onDrop($event, 'businessLicense')">
-          <img src="./assets/icons-upload.png" alt="" (click)="businessLicenseFileInput.click()">
-          <p *ngIf="!businessLicenseFile">Drag & Drop your files here or click to upload</p>
+        <div
+          class="file-drop-zone"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event, 'businessLicense')"
+          (click)="businessLicenseFileInput.click()"
+        >
+          <img src="./assets/icons-upload.png" alt="" />
+          <p *ngIf="!businessLicenseFile">
+            Drag & Drop your files here or click to upload
+          </p>
           <p *ngIf="businessLicenseFile">{{ businessLicenseFile.name }}</p>
-          <input type="file" #businessLicenseFileInput (change)="onFileSelected($event, 'businessLicense')" hidden>
-          <button type="button" class="upload-button" (click)="businessLicenseFileInput.click()">Choose File</button>
+          <input
+            type="file"
+            #businessLicenseFileInput
+            (change)="onFileSelected($event, 'businessLicense')"
+            hidden
+          />
+          <!-- <button type="button" class="upload-button" (click)="businessLicenseFileInput.click()">Choose File</button> -->
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
         </div>
       </div>
     </div>
-
+    <hr />
     <div class="id">
       <h4>Insurance Documents</h4>
       <div class="card flex justify-content-center">
         <p-toast></p-toast>
-        <div class="file-drop-zone"
-             (dragover)="onDragOver($event)"
-             (dragleave)="onDragLeave($event)"
-             (drop)="onDrop($event, 'insurance')">
-          <img src="./assets/icons-upload.png" alt="" (click)="insuranceFileInput.click()">
-          <p *ngIf="!insuranceFile">Drag & Drop your files here or click to upload</p>
+        <div
+          class="file-drop-zone"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event, 'insurance')"
+          (click)="insuranceFileInput.click()"
+        >
+          <img src="./assets/icons-upload.png" alt="" />
+          <p *ngIf="!insuranceFile">
+            Drag & Drop your files here or click to upload
+          </p>
           <p *ngIf="insuranceFile">{{ insuranceFile.name }}</p>
-          <input type="file" #insuranceFileInput (change)="onFileSelected($event, 'insurance')" hidden>
-          <button type="button" class="upload-button" (click)="insuranceFileInput.click()">Choose File</button>
+          <input
+            type="file"
+            #insuranceFileInput
+            (change)="onFileSelected($event, 'insurance')"
+            hidden
+          />
+          <!-- <button type="button" class="upload-button" (click)="insuranceFileInput.click()">Choose File</button> -->
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
         </div>
       </div>
     </div>
-<!-- 
-    <div class="button-container">
-      <button type="submit" [disabled]="!isFormValid()">
-        Submit All Data
-      </button>
-    </div> -->
-
+  </div>
+  <div class="button-container">
+    <button type="button" (click)="onPrevious()">Previous</button>
+    <button type="button" (click)="onNext()">Next</button>
   </div>
 </form>

@@ -17,11 +17,12 @@
     justify-content: center !important;
     width: 100%;
     margin-bottom: 24px;
+    border: none;
 }
 
 .button-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 0;
   }
@@ -29,6 +30,8 @@
 h4{
   font-size: 18px;
   margin-top: 36px;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
 button {
@@ -43,6 +46,11 @@ button {
     transition: background-color 0.3s ease;
   }
 
+  .card{
+    display: flex;
+    align-items: center !important;
+  }
+
   .file-drop-zone {
     border: 2px dashed #999;
     padding: 8px;
@@ -50,8 +58,12 @@ button {
     cursor: pointer;
     position: relative;
     transition: background-color 0.3s ease;
-    width: 100%;
+    width: 80%;
     height: 172px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .file-drop-zone:hover {

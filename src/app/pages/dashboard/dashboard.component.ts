@@ -128,11 +128,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  prevStep() {
-    if (this.activeStep > 0) {
-      this.activeStep--;
-    }
+ // Method to handle the previous step
+ goToPreviousStep() {
+  if (this.activeStep > 0) {
+    this.activeStep--;
   }
+}
 
   goToStep(index: number) {
     this.activeStep = index;
