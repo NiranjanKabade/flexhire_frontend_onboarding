@@ -33,11 +33,11 @@ import { FormDataService } from '../../services/form-data.service';
   styleUrl: './company-info.component.scss',
 })
 export class CompanyInfoComponent implements OnInit {
+  // @Output() next: EventEmitter<void> = new EventEmitter();
+  // @Output() prev: EventEmitter<void> = new EventEmitter();
+  @Input() next!: () => void; // Input for the next function
 
-  @Output() next = new EventEmitter<any>();
-  
   companyForm: FormGroup;
-
 
   constructor(
     private fb: FormBuilder,
@@ -97,27 +97,34 @@ export class CompanyInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      // Restore the form data if available
-      const existingData = this.formDataService.getFormDataForStep('companyInfo');
-      if (existingData) {
-        this.companyForm.patchValue(existingData);
-      }
+    // Restore the form data if available
+    const existingData = this.formDataService.getFormDataForStep('companyInfo');
+    if (existingData) {
+      this.companyForm.patchValue(existingData);
+    }
 
     this.companyForm.valueChanges.subscribe(() => {
       // Emit the form data only when the last field is filled
-      if (this.companyForm.get('size')?.value) {
-        this.emitFormData();
-      }
+      // if (this.companyForm.get('size')?.value) {
+      //   this.emitFormData();
+      // }
     });
   }
 
-   // Method to emit form data to the parent component
-   private emitFormData() {
-    this.next.emit(this.companyForm.value);
-  }
+  // Method to emit form data to the parent component
+  // private emitFormData() {
+  //   this.next.emit(this.companyForm.value);
+  // }
 
   getFormData() {
     return this.companyForm.value;
   }
-
+  onNext() {
+    if (this.companyForm.invalid) {
+      // Call the injected next function from the DashboardComponent
+      this.next(); // Call the injected next function
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  }
 }

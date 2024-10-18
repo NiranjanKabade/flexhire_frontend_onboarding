@@ -1,6 +1,7 @@
 import {
   Component,
   inject,
+  Injector,
   OnInit,
   Type,
   ViewChild,
@@ -32,7 +33,6 @@ import { CompanyDocumentationComponent } from '../company-documentation/company-
 import { HttpClient } from '@angular/common/http';
 import { FormDataService } from '../../services/form-data.service';
 
-
 interface Step {
   title: string;
   component: Type<any>;
@@ -55,32 +55,31 @@ interface Step {
     ButtonModule,
     StepperModule,
     StepsModule,
-    
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild(CompanyInfoComponent) companyInfoComponent!: CompanyInfoComponent;
+  // @ViewChild(CompanyInfoComponent) companyInfoComponent!: CompanyInfoComponent;
+  // @ViewChild(ContactInfoComponent) contactInfoComponent!: ContactInfoComponent;
+  // @ViewChild(CompanyDocumentationComponent) companyDocumentationComponent!: CompanyDocumentationComponent;
 
-  steps: any = [
+  steps: any= [
     {
       title: 'Company Information',
       component: CompanyInfoComponent,
-      key: 'companyInfo',
     },
     {
       title: 'Contact Information',
       component: ContactInfoComponent,
-      key: 'contactInfo',
     },
     {
-      title: 'Comapany Documents',
+      title: 'Company Documents',
       component: CompanyDocumentationComponent,
-      key: 'companyDoc',
     },
     { title: 'Done', content: 'Completed' },
   ];
+
   activeStep = 0;
   formData: any = {};
   warningMessage: string | null = null;
@@ -88,16 +87,45 @@ export class DashboardComponent implements OnInit {
   constructor(private formDataService: FormDataService) {}
 
   ngOnInit(): void {
-    // Subscribe to the form data changes
     this.formDataService.formData$.subscribe((data) => {
       this.formData = data;
       console.log(data);
     });
   }
+  get componentInjector() {
+    return Injector.create({
+      providers: [
+        {
+          provide: CompanyInfoComponent,
+          useValue: {
+            next: () => this.onNextStep(),
+          },
+        },
+        {
+          provide: ContactInfoComponent,
+          useValue: {
+            next: () => this.onNextStep(),
+          },
+        },
+        {
+          provide: CompanyDocumentationComponent,
+          useValue: {
+            next: () => this.onNextStep(),
+          },
+        },
+      ],
+    });
+  }
 
-  // Method to handle the form data emitted by the form component
-  onFormDataChanged(data: any) {
-    this.formDataService.updateFormData(data);
+  onNextStep() {
+    const currentStepComponent = this.getCurrentStepComponent();
+    if (currentStepComponent) {
+      // const formData = currentStepComponent.getFormData();
+      // this.formDataService.updateFormData(formData);
+    }
+    if (this.activeStep < this.steps.length - 1) {
+      this.activeStep++;
+    }
   }
 
   prevStep() {
@@ -106,28 +134,16 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  nextStep() {
-    if (this.companyInfoComponent) {
-      // Update the form data in the service before moving to the next step
-      const formData = this.companyInfoComponent.getFormData();
-      this.formDataService.updateFormData(formData);
-      this.warningMessage = null;
-
-      if (this.activeStep < this.steps.length - 1) {
-        this.activeStep++;
-      }
-    } else {
-      this.warningMessage =
-        'Please fill out all required fields before proceeding.';
-    }
-  }
-
   goToStep(index: number) {
     this.activeStep = index;
   }
 
-  // Method to clear the form data from the service
-  clearFormData() {
-    this.formDataService.clearFormData();
+  private getCurrentStepComponent() {
+    switch (this.activeStep) {
+      case 0: return CompanyInfoComponent;
+      case 1: return ContactInfoComponent;
+      case 2: return CompanyDocumentationComponent;
+      default: return null;
+    }
   }
 }
