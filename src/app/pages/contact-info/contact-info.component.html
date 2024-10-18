@@ -4,16 +4,15 @@
     *ngFor="let contact of contacts.controls; let i = index"
   >
     <div [formGroupName]="i" class="contact-group">
-      <div class="contact-container">  <h3>Contact {{ i + 1 }}</h3>
+      <div class="contact-container"> 
+        <h3>Contact {{ indexToWord(i) }}</h3>
         <div class="btn-add-remove">
-        <a (click)="addContact()" class="btn-add">
-         <img src="./assets/icons-add.png" height="36">
-      </a>
+        
       <a
       (click)="removeContact(i)"
       *ngIf="contacts.length > 1"
     >
-      <img src="./assets/icons-remove.png" height="36">
+      <img src="./assets/delete.svg" height="32">
   </a></div>
 </div>
     
@@ -92,9 +91,12 @@
         </div>
       </div>
 
-     
+      
     </div>
   </div>
+  <a class="btn-add">
+    <button (click)="addContact()">Add</button>
+  </a>
   <!-- <div class="button-container">
   <button type="submit" mat-button color="primary" [disabled]="contactForm.invalid">Next</button>
   </div> -->

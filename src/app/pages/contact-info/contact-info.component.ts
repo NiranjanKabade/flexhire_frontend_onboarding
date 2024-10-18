@@ -25,6 +25,9 @@ export class ContactInfoComponent implements OnInit{
   @Output() next = new EventEmitter<void>();
   contactForm: FormGroup;
 
+  private numberToWords: string[] = [
+     'First', 'Second', 'Third', 'Forth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'
+  ];
 
   constructor(private fb: FormBuilder, private formDataService: FormDataService, private http: HttpClient,  private router: Router) {
     // Initialize the FormArray with one contact form
@@ -34,13 +37,6 @@ export class ContactInfoComponent implements OnInit{
   }
 
   ngOnInit(): void {}
-
-  // onSave() {
-  //   if (this.contactForm.valid) {
-  //     this.formDataService.updateFormData('contactInfo', this.contactForm.value);
-  //   }
-  // }
-
 
 
   get contacts(): FormArray {
@@ -69,27 +65,14 @@ export class ContactInfoComponent implements OnInit{
     }
   }
 
-  // onNext() {
-  //   if (this.contactForm.valid) {
-  //     // Save form data to the service
-  //     this.formDataService.updateFormData(this.contactForm.value);
-  //     this.next.emit(); // Emit the next event
-  //     console.log("Data saved successfully for Component One");
-  //     // this.router.navigate(['/company-document']);
-
-  //     // Make an API call to save the data of this specific component
-  //     // this.http.post('your-api-endpoint/componentTwo', this.contactForm.value).subscribe(
-  //     //   response => {
-  //     //     console.log('Data saved successfully for Component Two:', response);
-  //     //   },
-  //     //   error => {
-  //     //     console.error('Error saving data for Component Two:', error);
-  //     //   }
-  //     // );
-  //   } else {
-  //     console.log('Form is not valid');
-  //   }
-  // }
+     // Convert index to word
+     indexToWord(index: number):string {
+      if (index >= 0 && index < this.numberToWords.length) {
+        return this.numberToWords[index];
+      }
+      return "";
+    }
+  
 
  
   }

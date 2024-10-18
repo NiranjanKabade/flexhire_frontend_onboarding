@@ -22,9 +22,11 @@ interface UploadEvent {
   styleUrl: './company-documentation.component.scss'
 })
 export class CompanyDocumentationComponent {
-  file: File | null = null;
+  incorporationFile: File | null = null;
+  businessLicenseFile: File | null = null;
+  insuranceFile: File | null = null;
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient, private messageService:MessageService){}
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -38,32 +40,54 @@ export class CompanyDocumentationComponent {
     (event.currentTarget as HTMLElement).classList.remove('dragover');
   }
 
-  onDrop(event: DragEvent) {
+  onDrop(event: DragEvent, type: string) {
     event.preventDefault();
     event.stopPropagation();
     const files = event.dataTransfer?.files;
     if (files && files.length > 0) {
-      this.file = files[0];
+      switch (type) {
+        case 'incorporation':
+          this.incorporationFile = files[0];
+          break;
+        case 'businessLicense':
+          this.businessLicenseFile = files[0];
+          break;
+        case 'insurance':
+          this.insuranceFile = files[0];
+          break;
+      }
     }
     (event.currentTarget as HTMLElement).classList.remove('dragover');
   }
 
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event, type: string) {
     const input = event.target as HTMLInputElement;
+
     if (input.files && input.files.length > 0) {
-      this.file = input.files[0];
-    }
+      const file = input.files[0];
+      const validFileTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+
+      if (validFileTypes.includes(file.type)) {
+        switch (type) {
+          case 'incorporation':
+            this.incorporationFile = file;
+            break;
+          case 'businessLicense':
+            this.businessLicenseFile = file;
+            break;
+          case 'insurance':
+            this.insuranceFile = file;
+            break;
+        }
+      } else {
+        this.showToast('error', 'Invalid file type!', 'Please upload a JPEG, PNG, or PDF file.');
+        input.value = ''; // Clear the input
+      }
+    } 
   }
 
-  uploadFile() {
-    if (this.file) {
-      const formData = new FormData();
-      formData.append('file', this.file);
-
-      this.http.post('your-backend-url/api/upload', formData).subscribe(
-        (response) => console.log('Upload success', response),
-        (error) => console.log('Upload error', error)
-      );
-    }
+  private showToast(severity: string, summary: string, detail: string): void {
+    this.messageService.add({ severity, summary, detail });
   }
+
 }
