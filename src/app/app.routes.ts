@@ -7,7 +7,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { CompanyInfoComponent } from './pages/company-info/company-info.component';
 import { ContactInfoComponent } from './pages/contact-info/contact-info.component';
 import { CompanyDocumentationComponent } from './pages/company-documentation/company-documentation.component';
-import { authGuard } from './auth.guard';
+import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,10 +19,10 @@ export const routes: Routes = [
         component: DefaultLayoutComponent,
         children: [
           
-          {path: 'dashboard', component: DashboardComponent,canActivate: [authGuard]},
-          { path: 'company-info', component:CompanyInfoComponent,canActivate: [authGuard]},
-          { path: 'contact-info', component:ContactInfoComponent,canActivate: [authGuard]},
-          { path: 'company-document', component:CompanyDocumentationComponent,canActivate: [authGuard]},
+          {path: 'dashboard', component: DashboardComponent},
+          { path: 'company-info', component:CompanyInfoComponent},
+          { path: 'contact-info', component:ContactInfoComponent},
+          { path: 'company-document', component:CompanyDocumentationComponent},
 
         ],
       },

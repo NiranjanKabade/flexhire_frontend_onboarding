@@ -11,7 +11,7 @@ import { UploadEvent } from 'primeng/fileupload';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000/api/login'; // Update with your Django login endpoint
+  private apiUrl = 'http://127.0.0.1:8000/api/employer_login/'; // Update with your Django login endpoint
   private tokenKey = 'access_token';
   private refreshTokenKey = 'refresh_token';
 
@@ -21,16 +21,8 @@ export class AuthService {
   login(identifier: string, password: string): Observable<any> {
     return this.http.post<any>(this.apiUrl, { identifier, password }).pipe(
       tap((response) => {
-<<<<<<< HEAD:src/app/services/auth.service.ts
-        if (response.access) {
-          localStorage.setItem(this.tokenKey, response.access);
-          localStorage.setItem(this.refreshTokenKey, response.refresh);
-          this.isLoggedIn.next(true);
-          
-        }
-        else{
-          this.isLoggedIn.next(false)
-=======
+        
+
         if (response.access_token) {
           // Store tokens in localStorage
           console.log('Saving tokens to localStorage');
@@ -41,7 +33,6 @@ export class AuthService {
         } else {
           // Handle login failure
           console.log('Login failed: No access token in the response');
->>>>>>> ce46a74a32424240d1d24daf3c132ac9fc24fa8c:src/app/auth.service.ts
         }
       })
     );
