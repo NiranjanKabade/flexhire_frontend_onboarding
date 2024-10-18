@@ -1,18 +1,9 @@
-<form [formGroup]="companyForm" (ngSubmit)="onNext()">
+<form [formGroup]="companyForm">
   <div>
     <div class="company-group">
       <h3>Company Information</h3>
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="companyName" formControlName="companyName" />
-            <label for="companyName">Company Name</label>
-          </p-floatLabel>
-          <div *ngIf="f.companyName.touched && f.companyName.invalid" class="error-message">
-            <small *ngIf="f.companyName.errors?.required">Company Name is required.</small>
-            <small *ngIf="f.companyName.errors?.minlength">Must be at least 2 characters long.</small>
-            <small *ngIf="f.companyName.errors?.maxlength">Cannot exceed 50 characters.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Company Name</mat-label>
             <input
@@ -20,29 +11,26 @@
               placeholder="Enter your Company Name"
               formControlName="companyName"
             />
-            
-    
-            <mat-error *ngIf="companyForm.get('companyName')?.hasError('required')">
+
+            <mat-error
+              *ngIf="companyForm.get('companyName')?.hasError('required')"
+            >
               Company Name is required.
             </mat-error>
-            <mat-error *ngIf="companyForm.get('companyName')?.hasError('minlength')">
+            <mat-error
+              *ngIf="companyForm.get('companyName')?.hasError('minlength')"
+            >
               Must be at least 2 characters long.
             </mat-error>
-            <mat-error *ngIf="companyForm.get('companyName')?.hasError('maxlength')">
+            <mat-error
+              *ngIf="companyForm.get('companyName')?.hasError('maxlength')"
+            >
               Cannot exceed 50 characters.
             </mat-error>
           </mat-form-field>
         </div>
 
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="businessRegNumber" formControlName="businessRegNumber" />
-            <label for="businessRegNumber">Business Registration Number</label>
-          </p-floatLabel>
-          <div *ngIf="f.businessRegNumber.touched && f.businessRegNumber.invalid" class="error-message">
-            <small *ngIf="f.businessRegNumber.errors?.required">Business Registration Number is required.</small>
-            <small *ngIf="f.businessRegNumber.errors?.pattern">Invalid registration number.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Business Registration Number</mat-label>
             <input
@@ -50,28 +38,22 @@
               placeholder="Enter your BRS"
               formControlName="businessRegNumber"
             />
-            
-    
-            <mat-error *ngIf="companyForm.get('businessRegNumber')?.hasError('required')">
-              Business Registration Number is required.
+
+            <mat-error
+              *ngIf="companyForm.get('businessRegNumber')?.hasError('required')"
+            >
+              BRN is required.
             </mat-error>
-            <mat-error *ngIf="companyForm.get('businessRegNumber')?.hasError('pattern')">
-              Invalid BRN number.
+            <mat-error
+              *ngIf="companyForm.get('businessRegNumber')?.hasError('pattern')"
+            >
+              Invalid BRN.
             </mat-error>
-            
           </mat-form-field>
         </div>
       </div>
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="taxIdentificationNumber" formControlName="taxIdentificationNumber" />
-            <label for="taxIdentificationNumber">Tax Identification Number (TIN)</label>
-          </p-floatLabel>
-          <div *ngIf="f.taxIdentificationNumber.touched && f.taxIdentificationNumber.invalid" class="error-message">
-            <small *ngIf="f.taxIdentificationNumber.errors?.required">TIN is required.</small>
-            <small *ngIf="f.taxIdentificationNumber.errors?.pattern">Invalid TIN.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Tax Identification Number (TIN)</mat-label>
             <input
@@ -79,27 +61,25 @@
               placeholder="Enter your TIN"
               formControlName="taxIdentificationNumber"
             />
-            
-    
-            <mat-error *ngIf="companyForm.get('taxIdentificationNumber')?.hasError('required')">
+
+            <mat-error
+              *ngIf="
+                companyForm.get('taxIdentificationNumber')?.hasError('required')
+              "
+            >
               TIN is required.
             </mat-error>
-            <mat-error *ngIf="companyForm.get('taxIdentificationNumber')?.hasError('pattern')">
+            <mat-error
+              *ngIf="
+                companyForm.get('taxIdentificationNumber')?.hasError('pattern')
+              "
+            >
               Invalid TIN.
             </mat-error>
-            
           </mat-form-field>
         </div>
 
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="website" formControlName="website" />
-            <label for="website">Website</label>
-          </p-floatLabel>
-          <div *ngIf="f.website.touched && f.website.invalid" class="error-message">
-            <small *ngIf="f.website.errors?.required">Website is required.</small>
-            <small *ngIf="f.website.errors?.pattern">Enter a valid URL.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Website</mat-label>
             <input
@@ -107,15 +87,13 @@
               placeholder="Enter your Website"
               formControlName="website"
             />
-            
-    
+
             <mat-error *ngIf="companyForm.get('website')?.hasError('required')">
               Website is required.
             </mat-error>
             <mat-error *ngIf="companyForm.get('website')?.hasError('pattern')">
               Enter a valid URL.
             </mat-error>
-            
           </mat-form-field>
         </div>
       </div>
@@ -125,15 +103,6 @@
       <h3>Company Profile</h3>
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="description" formControlName="description" />
-            <label for="description">Description</label>
-          </p-floatLabel>
-          <div *ngIf="f.description.touched && f.description.invalid" class="error-message">
-            <small *ngIf="f.description.errors?.required">Description is required.</small>
-            <small *ngIf="f.description.errors?.minlength">Must be at least 10 characters long.</small>
-            <small *ngIf="f.description.errors?.maxlength">Cannot exceed 500 characters.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Description</mat-label>
             <input
@@ -141,29 +110,26 @@
               placeholder="Enter Description"
               formControlName="description"
             />
-            
-    
-            <mat-error *ngIf="companyForm.get('description')?.hasError('required')">
+
+            <mat-error
+              *ngIf="companyForm.get('description')?.hasError('required')"
+            >
               Description is required.
             </mat-error>
-            <mat-error *ngIf="companyForm.get('description')?.hasError('minlength')">
+            <mat-error
+              *ngIf="companyForm.get('description')?.hasError('minlength')"
+            >
               Must be at least 10 characters long.
             </mat-error>
-            <mat-error *ngIf="companyForm.get('description')?.hasError('maxlength')">
+            <mat-error
+              *ngIf="companyForm.get('description')?.hasError('maxlength')"
+            >
               Cannot exceed 500 characters.
             </mat-error>
-            
           </mat-form-field>
         </div>
 
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="industry" formControlName="industry" />
-            <label for="industry">Industry</label>
-          </p-floatLabel>
-          <div *ngIf="f.industry.touched && f.industry.invalid" class="error-message">
-            <small *ngIf="f.industry.errors?.required">Industry is required.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Industry</mat-label>
             <input
@@ -171,50 +137,34 @@
               placeholder="Enter Industry"
               formControlName="industry"
             />
-            
-    
-            <mat-error *ngIf="companyForm.get('industry')?.hasError('required')">
+
+            <mat-error
+              *ngIf="companyForm.get('industry')?.hasError('required')"
+            >
               Industry is required.
             </mat-error>
-           
-            
           </mat-form-field>
         </div>
       </div>
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="size" formControlName="size" />
-            <label for="size">Size</label>
-          </p-floatLabel>
-          <div *ngIf="f.size.touched && f.size.invalid" class="error-message">
-            <small *ngIf="f.size.errors?.required">Company size is required.</small>
-            <small *ngIf="f.size.errors?.pattern">Size must be a valid number.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Size</mat-label>
-            <input
-              matInput
-              placeholder="Enter Size"
-              formControlName="size"
-            />
-            
-    
+            <input matInput placeholder="Enter Size" formControlName="size" />
+
             <mat-error *ngIf="companyForm.get('size')?.hasError('required')">
               Company size is required.
             </mat-error>
-    
+
             <mat-error *ngIf="companyForm.get('size')?.hasError('pattern')">
               Size must be a valid number.
             </mat-error>
-           
-            
           </mat-form-field>
         </div>
       </div>
     </div>
   </div>
-<!-- <div class="button-container">
+  <!-- <div class="button-container">
   <button type="submit" mat-button color="primary" [disabled]="companyForm.invalid">Next</button>
 </div> -->
 </form>

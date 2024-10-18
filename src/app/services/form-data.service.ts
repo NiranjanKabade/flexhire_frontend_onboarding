@@ -7,20 +7,26 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class FormDataService {
-  private componentFormData = new BehaviorSubject<any>({});
+  private componentFormData = new BehaviorSubject<{ [key: string]: any }>({});
   formData$ = this.componentFormData.asObservable();
 
   // Update the form data with the latest step's data
-  updateFormData(step: string, data: any): void {
-    const currentData = this.componentFormData.value;
-    this.componentFormData.next({ ...currentData, [step]: data });
+  updateFormData( data: any): void {
+    const currentData = this.componentFormData.getValue();
+    const updatedData = { ...currentData, ...data };
+    this.componentFormData.next(updatedData);
     console.log(data);
     
   }
 
   // Get the current form data
-  getFormData(step: string):any {
-    return this.componentFormData.value;
+  getFormData(stepKey: string):any {
+    return this.componentFormData.getValue()[stepKey] || null;;
+  }
+
+   // Get form data for a specific step
+   getFormDataForStep(stepKey: string) {
+    return this.componentFormData.getValue()[stepKey] || null;
   }
 
    // Method to get all data
@@ -29,7 +35,7 @@ export class FormDataService {
   }
 
   // Method to clear form data (if needed)
-  clearData(): void {
+  clearFormData(): void {
     this.componentFormData.next({});
   }
 }

@@ -142,3 +142,9 @@ button:disabled {
 button:hover:not(:disabled) {
   background-color: #0056b3; /* Darker shade on hover */
 }
+
+.warning-message {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+}

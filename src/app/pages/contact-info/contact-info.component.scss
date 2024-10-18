@@ -24,7 +24,7 @@
 .justify-content-center {
   justify-content: center !important;
   width: 48%;
-  margin-top: 36px;
+  margin-top: 18px;
   border: none;
 }
 
@@ -50,4 +50,25 @@ button {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 20px;
+}
+
+.contact-container{
+  display: flex;
+  justify-content: space-between; /* Ensures the text and button are separated */
+  align-items: center; /* Aligns the items vertically in the center */
+}
+
+.btn-add-remove{
+  display: flex;
+}
+
+.btn-add{
+  margin-right: 10px;
+}
+
+.mat-mdc-form-field-hint-wrapper .mat-mdc-form-field-error-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }

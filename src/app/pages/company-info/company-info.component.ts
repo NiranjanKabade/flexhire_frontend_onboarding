@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,9 +12,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormDataService } from '../../form-data.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormDataService } from '../../services/form-data.service';
 
 @Component({
   selector: 'app-company-info',
@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
 })
 export class CompanyInfoComponent implements OnInit {
 
-  @Output() next = new EventEmitter<void>();
+  @Output() next = new EventEmitter<any>();
   
   companyForm: FormGroup;
 
@@ -60,7 +60,7 @@ export class CompanyInfoComponent implements OnInit {
       ], // Example pattern for business registration number
       taxIdentificationNumber: [
         '',
-        [Validators.required, Validators.pattern('^[0-9]{10}$')],
+        [Validators.required, Validators.pattern('^[0-9]{11}$')],
       ], // Example TIN validation
       website: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validates if it's a valid URL format
       description: [
@@ -96,31 +96,28 @@ export class CompanyInfoComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+      // Restore the form data if available
+      const existingData = this.formDataService.getFormDataForStep('companyInfo');
+      if (existingData) {
+        this.companyForm.patchValue(existingData);
+      }
 
-  onNext() {
-    if (this.companyForm.valid) {
-      // Save form data to the service
-      this.formDataService.updateFormData('company-info', this.companyForm.value);
-      this.next.emit(); // Emit the next event
-      console.log("Data saved successfully for Component One");
-
-      
-      // Make an API call to save the data of this specific component
-      // this.http.post('your-api-endpoint/company-info', this.companyForm.value).subscribe(
-      //   response => {
-      //     console.log('Data saved successfully for Component One:', response);
-          
-      //   },
-      //   error => {
-      //     console.error('Error saving data for Component One:', error);
-      //   }
-      // );
-    } else {
-      console.log('Form is not valid');
-      alert("Please fill the details first.")
-    }
+    this.companyForm.valueChanges.subscribe(() => {
+      // Emit the form data only when the last field is filled
+      if (this.companyForm.get('size')?.value) {
+        this.emitFormData();
+      }
+    });
   }
 
+   // Method to emit form data to the parent component
+   private emitFormData() {
+    this.next.emit(this.companyForm.value);
+  }
+
+  getFormData() {
+    return this.companyForm.value;
+  }
 
 }

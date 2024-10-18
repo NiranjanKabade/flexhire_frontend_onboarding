@@ -10,15 +10,12 @@
 .form-row{
     display: flex;
     flex-wrap: wrap;
-    /* gap: 24px; */
-    /* margin: 36px; */
-    justify-content: space-between;
-    /* width: 50%; */
+    
   }
 
 .justify-content-center {
     justify-content: center !important;
-    width: 48%;
+    width: 100%;
     margin-bottom: 24px;
 }
 
@@ -41,3 +38,59 @@ button {
     transition: background-color 0.3s ease;
     margin-top: 20px;
   }
+
+  .file-drop-zone {
+    border: 2px dashed #999;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    height: 200px;
+  }
+  
+  .file-drop-zone:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .file-drop-zone.dragover {
+    background-color: #e3f2fd;
+  }
+  
+  .upload-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .upload-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .choose-button,
+.upload-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.upload-button {
+  background-color:  #0056b3; /* Green color for upload button */
+}
+
+// .choose-button:hover,
+// .upload-button:hover {
+//   background-color: #0056b3;
+// }
+
+.upload-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

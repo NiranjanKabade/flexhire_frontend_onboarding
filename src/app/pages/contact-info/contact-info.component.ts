@@ -6,10 +6,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { FormDataService } from '../../form-data.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { FormDataService } from '../../services/form-data.service';
 
 @Component({
   selector: 'app-contact-info',
@@ -69,27 +69,27 @@ export class ContactInfoComponent implements OnInit{
     }
   }
 
-  onNext() {
-    if (this.contactForm.valid) {
-      // Save form data to the service
-      this.formDataService.updateFormData('contact-info', this.contactForm.value);
-      this.next.emit(); // Emit the next event
-      console.log("Data saved successfully for Component One");
-      // this.router.navigate(['/company-document']);
+  // onNext() {
+  //   if (this.contactForm.valid) {
+  //     // Save form data to the service
+  //     this.formDataService.updateFormData(this.contactForm.value);
+  //     this.next.emit(); // Emit the next event
+  //     console.log("Data saved successfully for Component One");
+  //     // this.router.navigate(['/company-document']);
 
-      // Make an API call to save the data of this specific component
-      // this.http.post('your-api-endpoint/componentTwo', this.contactForm.value).subscribe(
-      //   response => {
-      //     console.log('Data saved successfully for Component Two:', response);
-      //   },
-      //   error => {
-      //     console.error('Error saving data for Component Two:', error);
-      //   }
-      // );
-    } else {
-      console.log('Form is not valid');
-    }
-  }
+  //     // Make an API call to save the data of this specific component
+  //     // this.http.post('your-api-endpoint/componentTwo', this.contactForm.value).subscribe(
+  //     //   response => {
+  //     //     console.log('Data saved successfully for Component Two:', response);
+  //     //   },
+  //     //   error => {
+  //     //     console.error('Error saving data for Component Two:', error);
+  //     //   }
+  //     // );
+  //   } else {
+  //     console.log('Form is not valid');
+  //   }
+  // }
 
  
   }

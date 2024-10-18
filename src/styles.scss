@@ -83,9 +83,7 @@ p-steps li {
   margin: 36px;
 }
 
-// p-steps li:before{
-//   border-bottom: 1px solid;
-// }
+
 
 p-steps li:before {
   content: " ";
@@ -110,5 +108,11 @@ p-fileupload{
   width: 50%;
 }
 
+.mat-mdc-form-field-hint-wrapper .mat-mdc-form-field-error-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
 

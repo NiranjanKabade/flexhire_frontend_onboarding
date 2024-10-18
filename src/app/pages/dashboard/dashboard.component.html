@@ -22,6 +22,8 @@
       </div>
     </div>
     <div class="step-content">
+     <div *ngIf="warningMessage" class="warning-message">{{ warningMessage }}</div> <!-- Warning message -->
+
       <ng-container *ngIf="activeStep !== null">
         <ng-container *ngComponentOutlet="steps[activeStep].component"></ng-container>
       </ng-container>
@@ -32,4 +34,5 @@
     </div>
     
   </div>
+
 </div>

@@ -1,23 +1,25 @@
-<form [formGroup]="contactForm" (ngSubmit)="onNext()">
+<form [formGroup]="contactForm">
   <div
     formArrayName="contacts"
     *ngFor="let contact of contacts.controls; let i = index"
   >
     <div [formGroupName]="i" class="contact-group">
-      <h3>Contact {{ i + 1 }}</h3>
-      <button mat-button color="primary" (click)="addContact()">
-        Add Another Contact
-      </button>
+      <div class="contact-container">  <h3>Contact {{ i + 1 }}</h3>
+        <div class="btn-add-remove">
+        <a (click)="addContact()" class="btn-add">
+         <img src="./assets/icons-add.png" height="36">
+      </a>
+      <a
+      (click)="removeContact(i)"
+      *ngIf="contacts.length > 1"
+    >
+      <img src="./assets/icons-remove.png" height="36">
+  </a></div>
+</div>
+    
 
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input pInputText id="address-{{ i }}" formControlName="address" />
-            <label for="address-{{ i }}">Address</label>
-          </p-floatLabel>
-          <div *ngIf="contact.get('address')?.touched && contact.get('address')?.invalid" class="error-message">
-            <small *ngIf="contact.get('address')!.errors?.['required']">Address is required.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Address</mat-label>
             <input
@@ -26,26 +28,13 @@
               placeholder="Enter your Address"
               formControlName="address"
             />
-            
-    
+
             <mat-error *ngIf="contact.get('address')?.hasError('required')">
               Address is required.
             </mat-error>
           </mat-form-field>
         </div>
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input
-              pInputText
-              id="phoneNumber-{{ i }}"
-              formControlName="phoneNumber"
-            />
-            <label for="phoneNumber-{{ i }}">Phone Number</label>
-          </p-floatLabel>
-          <div *ngIf="contact.get('phoneNumber')?.touched && contact.get('phoneNumber')?.invalid" class="error-message">
-            <small *ngIf="contact.get('phoneNumber')!.errors?.['required']">Phone Number is required.</small>
-            <small *ngIf="contact.get('phoneNumber')!.errors?.['pattern']">Phone Number must be 10 digits.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
             <input
@@ -54,8 +43,7 @@
               id="phoneNumber-{{ i }}"
               formControlName="phoneNumber"
             />
-            
-    
+
             <mat-error *ngIf="contact.get('phoneNumber')?.hasError('required')">
               Phone Number is required.
             </mat-error>
@@ -68,18 +56,6 @@
 
       <div class="form-row">
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input
-              pInputText
-              id="emailAddress-{{ i }}"
-              formControlName="emailAddress"
-            />
-            <label for="emailAddress-{{ i }}">Email Address</label>
-          </p-floatLabel>
-          <div *ngIf="contact.get('emailAddress')?.touched && contact.get('emailAddress')?.invalid" class="error-message">
-            <small *ngIf="contact.get('emailAddress')!.errors?.['required']">Email Address is required.</small>
-            <small *ngIf="contact.get('emailAddress')!.errors?.['email']">Invalid email address.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Email Address</mat-label>
             <input
@@ -88,9 +64,10 @@
               id="emailAddress-{{ i }}"
               formControlName="emailAddress"
             />
-            
-    
-            <mat-error *ngIf="contact.get('emailAddress')?.hasError('required')">
+
+            <mat-error
+              *ngIf="contact.get('emailAddress')?.hasError('required')"
+            >
               Email Address is required.
             </mat-error>
             <mat-error *ngIf="contact.get('emailAddress')?.hasError('email')">
@@ -99,17 +76,6 @@
           </mat-form-field>
         </div>
         <div class="card flex justify-content-center">
-          <!-- <p-floatLabel>
-            <input
-              pInputText
-              id="position-{{ i }}"
-              formControlName="position"
-            />
-            <label for="position-{{ i }}">Position</label>
-          </p-floatLabel>
-          <div *ngIf="contact.get('position')?.touched && contact.get('position')?.invalid" class="error-message">
-            <small *ngIf="contact.get('position')!.errors?.['required']">Position is required.</small>
-          </div> -->
           <mat-form-field appearance="outline">
             <mat-label>Position</mat-label>
             <input
@@ -118,24 +84,15 @@
               id="emailAddress-{{ i }}"
               formControlName="position"
             />
-            
-    
+
             <mat-error *ngIf="contact.get('position')?.hasError('required')">
               Position is required.
             </mat-error>
-            
           </mat-form-field>
         </div>
       </div>
 
-      <button
-        mat-button
-        color="warn"
-        (click)="removeContact(i)"
-        *ngIf="contacts.length > 1"
-      >
-        Remove Contact
-      </button>
+     
     </div>
   </div>
   <!-- <div class="button-container">
