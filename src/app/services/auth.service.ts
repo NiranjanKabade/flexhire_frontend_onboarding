@@ -11,18 +11,17 @@ import { UploadEvent } from 'primeng/fileupload';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000/api/employer_login/'; // Update with your Django login endpoint
+  private apiUrl = 'http://127.0.0.1:8000/api/login'; // Update with your Django login endpoint
   private tokenKey = 'access_token';
   private refreshTokenKey = 'refresh_token';
-  isLoggedIn = new BehaviorSubject<boolean>(this.hasToken());
 
-  constructor(private http: HttpClient, private router: Router, @Inject(PLATFORM_ID) private platformId: any ) {
-    this.isLoggedIn.next(this.hasToken());
-  }
+
+  constructor(private http: HttpClient, private router: Router ) {}
 
   login(identifier: string, password: string): Observable<any> {
     return this.http.post<any>(this.apiUrl, { identifier, password }).pipe(
       tap((response) => {
+<<<<<<< HEAD:src/app/services/auth.service.ts
         if (response.access) {
           localStorage.setItem(this.tokenKey, response.access);
           localStorage.setItem(this.refreshTokenKey, response.refresh);
@@ -31,39 +30,61 @@ export class AuthService {
         }
         else{
           this.isLoggedIn.next(false)
+=======
+        if (response.access_token) {
+          // Store tokens in localStorage
+          console.log('Saving tokens to localStorage');
+          localStorage.setItem(this.tokenKey, response.access_token);
+          localStorage.setItem(this.refreshTokenKey, response.refresh_token);
+  
+          // Update login status
+        } else {
+          // Handle login failure
+          console.log('Login failed: No access token in the response');
+>>>>>>> ce46a74a32424240d1d24daf3c132ac9fc24fa8c:src/app/auth.service.ts
         }
       })
     );
   }
 
   logout() {
-    if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.tokenKey);
       localStorage.removeItem(this.refreshTokenKey);
-    }
-    this.isLoggedIn.next(false);
+      localStorage.removeItem("access_token")
+      localStorage.removeItem('refresh_token');
     this.router.navigate(['/login']);
   }
 
-  hasToken(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      return !!localStorage.getItem(this.tokenKey);
-    }
-    return false;
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('access_token');
   }
 
   getToken(): string | null {
-    if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem(this.tokenKey);
-    }
+  
     return null;
   }
 
+  getRefreshToken() {
+    return localStorage.getItem('refresh_Token');
+  }
+
+  // isTokenExpired(): boolean {
+  //   const token = this.getToken();
+
+  //   // Check if the token exists and whether it is expired
+  //   if (token) {
+  //     return this.jwtHelper.isTokenExpired(token); // Returns true if the token is expired, false otherwise
+  //   }
+
+  //   return true; // If no token is found, consider it expired
+  // }
+
   private storeToken(accessToken: string, refreshToken: string): void {
-    if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.tokenKey, accessToken);
       localStorage.setItem(this.refreshTokenKey, refreshToken);
     }
   }
 
-}
+
+
