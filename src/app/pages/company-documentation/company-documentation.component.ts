@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -25,6 +25,9 @@ export class CompanyDocumentationComponent {
   incorporationFile: File | null = null;
   businessLicenseFile: File | null = null;
   insuranceFile: File | null = null;
+
+  @Input() next!: () => void; // Input for the next function
+
 
   constructor(private http:HttpClient, private messageService:MessageService){}
 
@@ -90,4 +93,14 @@ export class CompanyDocumentationComponent {
     this.messageService.add({ severity, summary, detail });
   }
 
+  onNext() {
+    // if (this.contactForm.invalid) {
+    //   // Call the injected next function from the DashboardComponent
+    //   this.next(); // Call the injected next function
+    // } else {
+    //   alert('Please fill in all required fields.');
+    // }
+    this.next(); // Call the injected next function
+
+  }
 }

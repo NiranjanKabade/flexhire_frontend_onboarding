@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,7 +22,8 @@ import { FormDataService } from '../../services/form-data.service';
 })
 export class ContactInfoComponent implements OnInit{
 
-  @Output() next = new EventEmitter<void>();
+  @Input() next!: () => void; // Input for the next function
+
   contactForm: FormGroup;
 
   private numberToWords: string[] = [
@@ -73,7 +74,14 @@ export class ContactInfoComponent implements OnInit{
       return "";
     }
   
-
+    onNext() {
+      if (this.contactForm.invalid) {
+        // Call the injected next function from the DashboardComponent
+        this.next(); // Call the injected next function
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    }
  
   }
 

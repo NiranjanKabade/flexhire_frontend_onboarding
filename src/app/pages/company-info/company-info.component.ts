@@ -120,11 +120,12 @@ export class CompanyInfoComponent implements OnInit {
     return this.companyForm.value;
   }
   onNext() {
-    if (this.companyForm.invalid) {
+    if (this.companyForm.valid) {
       // Call the injected next function from the DashboardComponent
       this.next(); // Call the injected next function
     } else {
-      alert('Please fill in all required fields.');
+      this.companyForm.markAllAsTouched();
+      return
     }
   }
 }
