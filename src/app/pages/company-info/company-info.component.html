@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <form [formGroup]="companyForm">
   <div>
     <div class="company-group">
@@ -158,6 +159,20 @@
 
             <mat-error *ngIf="companyForm.get('size')?.hasError('pattern')">
               Size must be a valid number.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country" required>
+              <mat-option *ngFor="let country of countries" [value]="country.alpha2Code">
+                {{ country.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="companyForm.get('country')?.hasError('required')">
+              Country is required.
             </mat-error>
           </mat-form-field>
         </div>

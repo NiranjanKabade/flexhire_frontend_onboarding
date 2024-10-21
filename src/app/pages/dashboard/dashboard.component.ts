@@ -89,7 +89,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.formDataService.formData$.subscribe((data) => {
       this.formData = data;
-      console.log(data);
     });
   }
   get componentInjector() {

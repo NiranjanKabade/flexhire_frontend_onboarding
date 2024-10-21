@@ -14,7 +14,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormDataService } from '../../services/form-data.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { Country, DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-company-info',
@@ -28,7 +30,9 @@ import { FormDataService } from '../../services/form-data.service';
     MatButtonModule,
     InputTextModule,
     FloatLabelModule,
+    ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './company-info.component.html',
   styleUrl: './company-info.component.scss',
 })
@@ -39,12 +43,14 @@ export class CompanyInfoComponent implements OnInit {
   @Input() previous!: () => void; 
 
   companyForm: FormGroup;
+  countries: Country[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private formDataService: FormDataService,
-    private http: HttpClient,
-    private router: Router
+    private dataService: DataService,
+    // private http: HttpClient,
+    // private router: Router,
+    private messageService: MessageService
   ) {
     this.companyForm = this.fb.group({
       companyName: [
@@ -82,7 +88,10 @@ export class CompanyInfoComponent implements OnInit {
           Validators.max(100000),
         ],
       ],
+      country: ['', Validators.required], // Add country control
     });
+
+   
   }
 
   get f() {
@@ -98,33 +107,54 @@ export class CompanyInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Restore the form data if available
-    const existingData = this.formDataService.getFormDataForStep('companyInfo');
-    if (existingData) {
-      this.companyForm.patchValue(existingData);
-    }
+     // Load previously saved form data (if any)
+     this.patchFormData();
 
-    this.companyForm.valueChanges.subscribe(() => {
-      // Emit the form data only when the last field is filled
-      // if (this.companyForm.get('size')?.value) {
-      //   this.emitFormData();
-      // }
-    });
+    this.loadCountries();
   }
 
-  // Method to emit form data to the parent component
-  // private emitFormData() {
-  //   this.next.emit(this.companyForm.value);
-  // }
+  patchFormData(): void {
+    // Load previously saved form data from the DataService
+    const savedData = this.dataService.getData();
+    console.log(savedData);
+    
+    if (savedData) {
+      this.companyForm.patchValue({
+        companyName: savedData.companyName || '',
+        businessRegNumber: savedData.businessRegNumber || '',
+        taxIdentificationNumber: savedData.taxIdentificationNumber || '',
+        website: savedData.website || '',
+        description: savedData.description || '',
+        industry: savedData.industry || '',
+        size: savedData.size || '',
+        country: savedData.country || '', // Patch the country field as well
+      });
+    }
+  }
+
+  loadCountries(): void {
+    this.dataService.getCountries().subscribe((data) => {
+      this.countries = data;
+    });
+  }
 
   getFormData() {
     return this.companyForm.value;
   }
   onNext() {
     if (this.companyForm.valid) {
+      // Save data logic, including country ID
+      
+      this.dataService.setData(this.companyForm.value);
       // Call the injected next function from the DashboardComponent
       this.next(); // Call the injected next function
     } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Validation Error',
+        detail: 'Please fill in all required fields.',
+        life: 3000 // Duration in milliseconds
+      });
       this.companyForm.markAllAsTouched();
       return
     }

@@ -1,9 +1,10 @@
-<form>
+<p-toast></p-toast>
+<form [formGroup]="documentationForm">
   <div class="document-group">
     <h2>Company Documents</h2>
 
     <div class="ic">
-      <h4>Incorporation Documents</h4>
+      <h4>Incorporation Document</h4>
       <div class="card flex justify-content-center">
         <p-toast></p-toast>
         <div
@@ -24,7 +25,6 @@
             (change)="onFileSelected($event, 'incorporation')"
             hidden
           />
-          <!-- <button type="button" class="upload-button" (click)="incorporationFileInput.click()">Choose File</button> -->
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
         </div>
       </div>
@@ -52,14 +52,13 @@
             (change)="onFileSelected($event, 'businessLicense')"
             hidden
           />
-          <!-- <button type="button" class="upload-button" (click)="businessLicenseFileInput.click()">Choose File</button> -->
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
         </div>
       </div>
     </div>
     <hr />
     <div class="id">
-      <h4>Insurance Documents</h4>
+      <h4>Insurance Document</h4>
       <div class="card flex justify-content-center">
         <p-toast></p-toast>
         <div
@@ -80,7 +79,6 @@
             (change)="onFileSelected($event, 'insurance')"
             hidden
           />
-          <!-- <button type="button" class="upload-button" (click)="insuranceFileInput.click()">Choose File</button> -->
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
         </div>
       </div>

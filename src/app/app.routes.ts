@@ -19,7 +19,7 @@ export const routes: Routes = [
         component: DefaultLayoutComponent,
         children: [
           
-          {path: 'dashboard', component: DashboardComponent},
+          { path: 'dashboard', component: DashboardComponent},
           { path: 'company-info', component:CompanyInfoComponent},
           { path: 'contact-info', component:ContactInfoComponent},
           { path: 'company-document', component:CompanyDocumentationComponent},

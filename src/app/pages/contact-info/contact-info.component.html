@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <form [formGroup]="contactForm">
   <div
     formArrayName="contacts"
@@ -16,37 +17,35 @@
       <div class="form-row">
         <div class="card flex justify-content-center">
           <mat-form-field appearance="outline">
-            <mat-label>Address</mat-label>
+            <mat-label>First Name</mat-label>
             <input
               matInput
-              id="address-{{ i }}"
-              placeholder="Enter your Address"
-              formControlName="address"
+              id="first_name-{{ i }}"
+              placeholder="Enter your firstname"
+              formControlName="first_name"
             />
 
-            <mat-error *ngIf="contact.get('address')?.hasError('required')">
-              Address is required.
+            <mat-error *ngIf="contact.get('first_name')?.hasError('required')">
+              First Name is required.
             </mat-error>
           </mat-form-field>
         </div>
         <div class="card flex justify-content-center">
           <mat-form-field appearance="outline">
-            <mat-label>Phone Number</mat-label>
+            <mat-label>Last Name</mat-label>
             <input
               matInput
-              placeholder="Enter your Phone Number"
-              id="phoneNumber-{{ i }}"
-              formControlName="phoneNumber"
+              id="last_name-{{ i }}"
+              placeholder="Enter your lastname"
+              formControlName="last_name"
             />
 
-            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('required')">
-              Phone Number is required.
-            </mat-error>
-            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('pattern')">
-              Phone Number must be 10 digits.
+            <mat-error *ngIf="contact.get('last_name')?.hasError('required')">
+              Last Name is required.
             </mat-error>
           </mat-form-field>
         </div>
+        
       </div>
 
       <div class="form-row">
@@ -56,32 +55,53 @@
             <input
               matInput
               placeholder="Enter your Email Address"
-              id="emailAddress-{{ i }}"
-              formControlName="emailAddress"
+              id="email_address-{{ i }}"
+              formControlName="email_address"
             />
 
             <mat-error
-              *ngIf="contact.get('emailAddress')?.hasError('required')"
+              *ngIf="contact.get('email_address')?.hasError('required')"
             >
               Email Address is required.
             </mat-error>
-            <mat-error *ngIf="contact.get('emailAddress')?.hasError('email')">
+            <mat-error *ngIf="contact.get('email_address')?.hasError('email')">
               Invalid email address.
             </mat-error>
           </mat-form-field>
         </div>
         <div class="card flex justify-content-center">
           <mat-form-field appearance="outline">
-            <mat-label>Position</mat-label>
+            <mat-label>Phone Number</mat-label>
             <input
               matInput
-              placeholder="Enter your Position"
-              id="emailAddress-{{ i }}"
-              formControlName="position"
+              placeholder="Enter your Phone Number"
+              id="phone_number-{{ i }}"
+              formControlName="phone_number"
             />
 
-            <mat-error *ngIf="contact.get('position')?.hasError('required')">
-              Position is required.
+            <mat-error *ngIf="contact.get('phone_number')?.hasError('required')">
+              Phone Number is required.
+            </mat-error>
+            <mat-error *ngIf="contact.get('phone_number')?.hasError('pattern')">
+              Phone Number must be 10 digits.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="card flex justify-content-center">
+          <mat-form-field appearance="outline">
+            <mat-label>Job Title</mat-label>
+            <input
+              matInput
+              placeholder="Enter your Job Title"
+              id="job_title-{{ i }}"
+              formControlName="job_title"
+            />
+
+            <mat-error *ngIf="contact.get('job_title')?.hasError('required')">
+              Job Title is required.
             </mat-error>
           </mat-form-field>
         </div>
@@ -89,14 +109,14 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     formArrayName="hrcontacts"
-    *ngFor="let contact of contacts.controls; let i = index">
+    *ngFor="let hrcontact of hrcontacts.controls; let i = index">
     <div [formGroupName]="i" class="contact-group">
       <div class="contact-container">
         <h3>HR Contact {{ indexToWord(i) }}</h3>
         <div class="btn-add-remove">
-          <a (click)="removeContact(i)" *ngIf="contacts.length > 1">
+          <a (click)="removeHrContact(i)" *ngIf="hrcontacts.length > 1">
             <img src="./assets/delete.svg" height="24" />
           </a>
         </div>
@@ -108,12 +128,12 @@
             <mat-label>First Name</mat-label>
             <input
               matInput
-              id="firstName-{{ i }}"
+              id="first_name-{{ i }}"
               placeholder="Enter your firstname"
-              formControlName="firstName"
+              formControlName="first_name"
             />
 
-            <mat-error *ngIf="contact.get('firstName')?.hasError('required')">
+            <mat-error *ngIf="hrcontact.get('first_name')?.hasError('required')">
               First Name is required.
             </mat-error>
           </mat-form-field>
@@ -123,12 +143,12 @@
             <mat-label>Last Name</mat-label>
             <input
               matInput
-              id="lastName-{{ i }}"
+              id="last_name-{{ i }}"
               placeholder="Enter your lastname"
-              formControlName="lastName"
+              formControlName="last_name"
             />
 
-            <mat-error *ngIf="contact.get('lastName')?.hasError('required')">
+            <mat-error *ngIf="hrcontact.get('last_name')?.hasError('required')">
               Last Name is required.
             </mat-error>
           </mat-form-field>
@@ -143,14 +163,14 @@
             <input
               matInput
               placeholder="Enter your Phone Number"
-              id="phoneNumber-{{ i }}"
-              formControlName="phoneNumber"
+              id="phone_number-{{ i }}"
+              formControlName="phone_number"
             />
 
-            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('required')">
+            <mat-error *ngIf="hrcontact.get('phone_number')?.hasError('required')">
               Phone Number is required.
             </mat-error>
-            <mat-error *ngIf="contact.get('phoneNumber')?.hasError('pattern')">
+            <mat-error *ngIf="hrcontact.get('phone_number')?.hasError('pattern')">
               Phone Number must be 10 digits.
             </mat-error>
           </mat-form-field>
@@ -161,16 +181,16 @@
             <input
               matInput
               placeholder="Enter your Email Address"
-              id="emailAddress-{{ i }}"
-              formControlName="emailAddress"
+              id="email_address-{{ i }}"
+              formControlName="email_address"
             />
 
             <mat-error
-              *ngIf="contact.get('emailAddress')?.hasError('required')"
+              *ngIf="hrcontact.get('email_address')?.hasError('required')"
             >
               Email Address is required.
             </mat-error>
-            <mat-error *ngIf="contact.get('emailAddress')?.hasError('email')">
+            <mat-error *ngIf="hrcontact.get('email_address')?.hasError('email')">
               Invalid email address.
             </mat-error>
           </mat-form-field>
@@ -181,22 +201,22 @@
       <div class="form-row">
         <div class="card flex justify-content-center">
           <mat-form-field appearance="outline">
-            <mat-label>Position</mat-label>
+            <mat-label>Job Title*</mat-label>
             <input
               matInput
-              placeholder="Enter your Position"
-              id="emailAddress-{{ i }}"
-              formControlName="position"
+              placeholder="Enter your Job Title"
+              id="job_title-{{ i }}"
+              formControlName="job_title"
             />
 
-            <mat-error *ngIf="contact.get('position')?.hasError('required')">
-              Position is required.
+            <mat-error *ngIf="hrcontact.get('job_title')?.hasError('required')">
+              Job Title is required.
             </mat-error>
           </mat-form-field>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <a class="btn-add">
     <button type="button" (click)="addContact()">Add</button>

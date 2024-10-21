@@ -30,7 +30,7 @@
 h4{
   font-size: 18px;
   margin-top: 36px;
-  margin-bottom: 16px;
+  margin-bottom: 36px;
   text-align: center;
 }
 
@@ -64,6 +64,7 @@ button {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 36px;
   }
   
   .file-drop-zone:hover {
@@ -107,4 +108,8 @@ button {
 .upload-button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.ui-toast {
+  font-size: 14px;
 }

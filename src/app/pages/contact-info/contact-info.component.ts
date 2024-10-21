@@ -9,16 +9,21 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FormDataService } from '../../services/form-data.service';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { DataService } from '../../services/data.service';
+
 
 @Component({
   selector: 'app-contact-info',
   standalone: true,
   imports: [ReactiveFormsModule,CommonModule,MatFormFieldModule, MatInputModule, MatSelectModule,MatButtonModule,
-    FloatLabelModule, InputTextModule
+    FloatLabelModule, InputTextModule, ToastModule
   ],
+  providers: [MessageService],
   templateUrl: './contact-info.component.html',
   styleUrl: './contact-info.component.scss'
+  
 })
 export class ContactInfoComponent implements OnInit{
 
@@ -27,38 +32,87 @@ export class ContactInfoComponent implements OnInit{
 
 
   contactForm: FormGroup;
+  companyInfo: any; // To store the retrieved company info
+  savedData: any;    // Store the saved data
+
 
   private numberToWords: string[] = [
      'First', 'Second', 'Third', 'Forth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth'
   ];
 
-  constructor(private fb: FormBuilder, private formDataService: FormDataService, private http: HttpClient,  private router: Router) {
+  constructor(private fb: FormBuilder, private dataService:DataService, private http: HttpClient,  private router: Router, private messageService: MessageService) {
     // Initialize the FormArray with one contact form
   this.contactForm = this.fb.group({
     contacts: this.fb.array([this.createContact()]), // Start with one contact
+    hrcontacts: this.fb.array([this.createHrContact()]),
   });
+
+
+   // Load previously saved company info data
+   this.companyInfo = this.dataService.getData();
+   console.log('Company Info:', this.companyInfo);
+
+  
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+     // Load the previously saved data (if any) and patch it to the form
+     this.savedData = this.dataService.getData();
+    
+     if (this.savedData?.contactInfo) {
+       // Patch contact info data
+       this.contactForm.patchValue({
+         contacts: this.savedData.contactInfo.contacts,
+         hrcontacts: this.savedData.contactInfo.hrcontacts
+       });
+       
+       // For dynamic fields in FormArray, patch manually
+       this.patchFormArray(this.contacts, this.savedData.contactInfo.contacts);
+       this.patchFormArray(this.hrcontacts, this.savedData.contactInfo.hrcontacts);
+     }
+ 
+    
+  }
 
 
   get contacts(): FormArray {
     return this.contactForm.get('contacts') as FormArray; // Ensure this returns a FormArray
   }
 
+  get hrcontacts(): FormArray{
+    return this.contactForm.get('hrcontacts') as FormArray;
+  }
+
+
+
   // // Method to create a new FormGroup for a contact
   createContact(): FormGroup {
     return this.fb.group({
-      address: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      emailAddress: ['', [Validators.required, Validators.email]],
-      position: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      phone_number: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      email_address: ['', [Validators.required, Validators.email]],
+      job_title: ['', Validators.required],
+     
     });
   }
+
+  createHrContact(): FormGroup {
+    return this.fb.group({
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      phone_number: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      email_address: ['', [Validators.required, Validators.email]],
+      job_title: ['', Validators.required]
+    });
+  }
+
 
   addContact(): void {
     // Make sure contacts is not null before calling push
     this.contacts.push(this.createContact());
+    this.hrcontacts.push(this.createContact());
   }
   
 
@@ -66,7 +120,26 @@ export class ContactInfoComponent implements OnInit{
     if (this.contacts.length > 1) {
       this.contacts.removeAt(index);
     }
+    if(this.hrcontacts.length > 1){
+      this.hrcontacts.removeAt(index);
+    }
   }
+
+  addHrContact() {
+    this.hrcontacts.push(this.createHrContact());
+  }
+
+  removeHrContact(index: number) {
+    this.hrcontacts.removeAt(index);
+  }
+
+    // Helper method to patch a FormArray
+    patchFormArray(formArray: FormArray, data: any[]) {
+      formArray.clear();
+      data.forEach(item => {
+        formArray.push(this.fb.group(item));
+      });
+    }
 
      // Convert index to word
      indexToWord(index: number):string {
@@ -75,13 +148,33 @@ export class ContactInfoComponent implements OnInit{
       }
       return "";
     }
+
   
     onNext() {
-      if (this.contactForm.invalid) {
+      if (this.contactForm.valid) {
+         // Store the contact form data if needed
+      const contactData = this.contactForm.value;
+
+      // Optionally, you can also combine it with the company info
+      const combinedData = {
+        companyInfo: this.companyInfo,
+        contactInfo: contactData,
+      };
+
+      // You can save the combined data using the service if needed
+      this.dataService.setData(combinedData);
+
         // Call the injected next function from the DashboardComponent
         this.next(); // Call the injected next function
       } else {
-        alert('Please fill in all required fields.');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Validation Error',
+        detail: 'Please fill in all required fields.',
+        life: 3000 // Duration in milliseconds
+      });
+          this.contactForm.markAllAsTouched();
+          return
       }
     }
  

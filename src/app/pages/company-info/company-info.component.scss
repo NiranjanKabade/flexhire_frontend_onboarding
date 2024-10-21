@@ -63,3 +63,7 @@ button {
   display: block;
   color: var(--mat-form-field-error-text-color, var(--mat-app-error));
 }
+
+.ui-toast {
+  font-size: 14px;
+}
