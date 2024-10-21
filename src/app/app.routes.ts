@@ -16,7 +16,7 @@ export const routes: Routes = [
     { path: 'reset-password', component: ResetPasswordComponent},
     {
         path: '',
-        component: DefaultLayoutComponent,
+        component: DefaultLayoutComponent,canActivate:[authGuard],
         children: [
           
           {path: 'dashboard', component: DashboardComponent},
