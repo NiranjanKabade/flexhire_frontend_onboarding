@@ -8,6 +8,7 @@
       <div class="card flex justify-content-center">
         <p-toast></p-toast>
         <div
+          *ngIf="!documentationForm.get('incorporationFile')?.value"
           class="file-drop-zone"
           (dragover)="onDragOver($event)"
           (dragleave)="onDragLeave($event)"
@@ -15,23 +16,33 @@
           (click)="incorporationFileInput.click()"
         >
           <img src="./assets/icons-upload.png" alt="" />
-          <p >
-            Drag & Drop your files here or click to upload
-          </p>
-          <ng-container *ngIf="documentationForm.get('incorporationFile')?.value">
-            <img [src]="getFileIcon(getFileExtensionFromBase64(documentationForm.get('incorporationFile')?.value))" alt="File Icon" class="file-icon" height="24"/>
-            <!-- <span>{{ getFileExtensionFromBase64(documentationForm.get('incorporationFile')?.value) }}</span> -->
-            <span *ngIf="('incorporationFileName')">{{ documentationForm.get('incorporationFileName')?.value}}</span>
-          </ng-container>
-          <!-- <p *ngIf="incorporationFile">{{ incorporationFile.name }}</p> -->
+          <p>Drag & Drop your files here or click to upload</p>
+
           <input
             type="file"
             #incorporationFileInput
             (change)="onFileSelected($event, 'incorporation')"
             hidden
-            
           />
-          <p >(Supports: JPEG, JPG, PNG, PDF)</p>
+          <p>(Supports: JPEG, JPG, PNG, PDF)</p>
+        </div>
+        <div *ngIf="documentationForm.get('incorporationFile')?.value">
+          <img
+            [src]="
+              getFileIcon(
+                getFileExtensionFromBase64(
+                  documentationForm.get('incorporationFile')?.value
+                )
+              )
+            "
+            alt="File Icon"
+            class="file-icon"
+            height="24"
+          />
+          <span *ngIf="'incorporationFileName'">{{
+            documentationForm.get("incorporationFileName")?.value
+          }}</span>
+          <button (click)="removeFile('incorporationFile')">remove</button>
         </div>
       </div>
     </div>
@@ -51,13 +62,25 @@
           <p *ngIf="!businessLicenseFile">
             Drag & Drop your files here or click to upload
           </p>
-          <ng-container *ngIf="documentationForm.get('businessLicenseFile')?.value">
-            <img [src]="getFileIcon(getFileExtensionFromBase64(documentationForm.get('businessLicenseFile')?.value))" alt="File Icon" class="file-icon" height="24"/>
-            <!-- <span>{{ getFileExtensionFromBase64(documentationForm.get('businessLicenseFile')?.value) }}</span> -->
-            <span>{{ documentationForm.get('businessLicenseFileName')?.value}}</span>
-
+          <ng-container
+            *ngIf="documentationForm.get('businessLicenseFile')?.value"
+          >
+            <img
+              [src]="
+                getFileIcon(
+                  getFileExtensionFromBase64(
+                    documentationForm.get('businessLicenseFile')?.value
+                  )
+                )
+              "
+              alt="File Icon"
+              class="file-icon"
+              height="24"
+            />
+            <span>{{
+              documentationForm.get("businessLicenseFileName")?.value
+            }}</span>
           </ng-container>
-          <!-- <p *ngIf="businessLicenseFile">{{ businessLicenseFile.name }}</p> -->
           <input
             type="file"
             #businessLicenseFileInput
@@ -81,16 +104,22 @@
           (click)="insuranceFileInput.click()"
         >
           <img src="./assets/icons-upload.png" alt="" />
-          <p>
-            Drag & Drop your files here or click to upload
-          </p>
+          <p>Drag & Drop your files here or click to upload</p>
           <ng-container *ngIf="documentationForm.get('insuranceFile')?.value">
-            <img [src]="getFileIcon(getFileExtensionFromBase64(documentationForm.get('insuranceFile')?.value))" alt="File Icon" class="file-icon" height="24"/>
-            <!-- <span>{{ getFileExtensionFromBase64(documentationForm.get('insuranceFile')?.value) }}</span> -->
-            <span>{{ documentationForm.get('insuranceFileName')?.value}}</span>
-
+            <img
+              [src]="
+                getFileIcon(
+                  getFileExtensionFromBase64(
+                    documentationForm.get('insuranceFile')?.value
+                  )
+                )
+              "
+              alt="File Icon"
+              class="file-icon"
+              height="24"
+            />
+            <span>{{ documentationForm.get("insuranceFileName")?.value }}</span>
           </ng-container>
-          <!-- <p *ngIf="insuranceFile">{{ insuranceFile.name }}</p> -->
           <input
             type="file"
             #insuranceFileInput
@@ -98,7 +127,6 @@
             hidden
           />
           <p>(Supports: JPEG, JPG, PNG, PDF)</p>
-          
         </div>
       </div>
     </div>
@@ -108,7 +136,4 @@
     <button type="button" (click)="onPrevious()">Previous</button>
     <button type="button" (click)="onNext()">Next</button>
   </div>
-
-
-
 </form>

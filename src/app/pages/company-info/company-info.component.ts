@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,8 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { Country, DataService } from '../../services/data.service';
@@ -30,28 +28,22 @@ import { Country, DataService } from '../../services/data.service';
     MatButtonModule,
     InputTextModule,
     FloatLabelModule,
-    ToastModule
+    ToastModule,
   ],
   providers: [MessageService],
   templateUrl: './company-info.component.html',
   styleUrl: './company-info.component.scss',
 })
 export class CompanyInfoComponent implements OnInit {
-  // @Output() next: EventEmitter<void> = new EventEmitter();
-  // @Output() prev: EventEmitter<void> = new EventEmitter();
-  @Input() next!: () => void; // Input for the next function
-  @Input() previous!: () => void; 
+  @Input() next!: () => void;
+  @Input() previous!: () => void;
 
   companyForm: FormGroup;
   countries: Country[] = [];
-  formKey = 'companyInfo'; // Unique key for this form
-  savedData: any;    // Store the saved data
+  formKey = 'companyInfo';
+  savedData: any;
 
-  constructor(
-    private fb: FormBuilder,
-    private dataService: DataService,
-    private messageService: MessageService
-  ) {
+  constructor(private fb: FormBuilder, private dataService: DataService) {
     this.companyForm = this.fb.group({
       companyName: [
         '',
@@ -64,12 +56,12 @@ export class CompanyInfoComponent implements OnInit {
       businessRegNumber: [
         '',
         [Validators.required, Validators.pattern('^[0-9]{8,12}$')],
-      ], // Example pattern for business registration number
+      ],
       taxIdentificationNumber: [
         '',
         [Validators.required, Validators.pattern('^[0-9]{11}$')],
-      ], // Example TIN validation
-      website: ['', [Validators.required, Validators.pattern('https?://.+')]], // Validates if it's a valid URL format
+      ],
+      website: ['', [Validators.required, Validators.pattern('https?://.+')]],
       description: [
         '',
         [
@@ -88,10 +80,8 @@ export class CompanyInfoComponent implements OnInit {
           Validators.max(100000),
         ],
       ],
-      country: ['', Validators.required], // Add country control
+      country: ['', Validators.required],
     });
-
-   
   }
 
   get f() {
@@ -107,14 +97,9 @@ export class CompanyInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     // Load saved form data from localStorage for this form
-    this.savedData = this.dataService.getData();
-    console.log(this.savedData);
-    
-    if (this.savedData) {
-      this.companyForm.patchValue(this.savedData.companyInfo);
-    }
-
+    this.dataService.formData.subscribe((data) => {
+      this.companyForm.patchValue(data.step1);
+    });
     this.loadCountries();
   }
 
@@ -129,26 +114,18 @@ export class CompanyInfoComponent implements OnInit {
   }
   onNext() {
     if (this.companyForm.valid) {
-
-      const companyData = this.companyForm.value;
-      this.dataService.setData({ companyInfo: companyData });       // Call the injected next function from the DashboardComponent
-      this.next(); // Call the injected next function
+      this.dataService.updateStepData(1, this.companyForm.value);
+      this.next();
     } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Validation Error',
-        detail: 'Please fill in all required fields.',
-        life: 3000 // Duration in milliseconds
-      });
       this.companyForm.markAllAsTouched();
-      return
+      return;
     }
   }
 
-   // Method to handle the previous button click
-   onPrevious() {
+  // Method to handle the previous button click
+  onPrevious() {
     if (this.previous) {
-      this.previous(); // Call the injected previous function
+      this.previous();
     }
   }
 }

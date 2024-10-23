@@ -10,20 +10,19 @@ import { CompanyDocumentationComponent } from './pages/company-documentation/com
 import { authGuard } from './services/auth.guard';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent },
-    { path: 'forgot-password', component:ForgotPasswordComponent},
-    { path: 'reset-password', component: ResetPasswordComponent},
-    {
-        path: '',
-        component: DefaultLayoutComponent,canActivate:[authGuard],
-        children: [
-          
-          { path: 'dashboard', component: DashboardComponent},
-          { path: 'company-info', component:CompanyInfoComponent},
-          { path: 'contact-info', component:ContactInfoComponent},
-          { path: 'company-document', component:CompanyDocumentationComponent},
-
-        ],
-      },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  {
+    path: '',
+    component: DefaultLayoutComponent,
+    // canActivate: [authGuard],
+    children: [
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'company-info', component: CompanyInfoComponent },
+      { path: 'contact-info', component: ContactInfoComponent },
+      { path: 'company-document', component: CompanyDocumentationComponent },
+    ],
+  },
 ];

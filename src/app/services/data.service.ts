@@ -11,11 +11,28 @@ export interface Country {
   providedIn: 'root',
 })
 export class DataService {
+  //Created by suraj*******************************
+
+  private formDataSubject = new BehaviorSubject<any>({
+    step1: {},
+    step2: {},
+    step3: {},
+  });
+
+  formData = this.formDataSubject.asObservable();
+
+  updateStepData(step: number, data: any) {
+    const currentData = this.formDataSubject.value;
+    this.formDataSubject.next({
+      ...currentData,
+      [`step${step}`]: { ...currentData[`step${step}`], ...data },
+    });
+  }
+  //********************************************/
 
   private storageKey = 'formData';
-  
+
   private apiUrl = 'https://restcountries.com/v2/all'; // Replace with your API endpoint
- 
 
   constructor(private http: HttpClient) {}
 
@@ -24,12 +41,12 @@ export class DataService {
   }
 
   // Method to set data
-  setData(data: any){
+  setData(data: any) {
     localStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 
   // Method to get the current data
-  getData(){
+  getData() {
     const data = localStorage.getItem(this.storageKey);
     return data ? JSON.parse(data) : null;
   }
