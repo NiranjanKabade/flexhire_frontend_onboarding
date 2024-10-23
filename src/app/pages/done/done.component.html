@@ -1,1 +1,35 @@
-<p>done works!</p>
+<!-- next.component.html
+<div>
+    <h2>Review Your Submission</h2>
+    
+    <h3>Company Information</h3>
+    <div *ngIf="formData.companyInfo">
+      <p><strong>Company Name:</strong> {{ formData.companyInfo.name }}</p>
+      <p><strong>Contact Number:</strong> {{ formData.companyInfo.contactNumber }}</p>
+      <p><strong>Email:</strong> {{ formData.companyInfo.email }}</p>
+      <p><strong>Address:</strong> {{ formData.companyInfo.address }}</p>
+    </div>
+  
+    <h3>Company Documentation</h3>
+    <div *ngIf="formData.documentationInfo">
+      <p><strong>Incorporation File:</strong> {{ formData.documentationInfo.incorporationFile }}</p>
+      <p><strong>Business License File:</strong> {{ formData.documentationInfo.businessLicenseFile }}</p>
+      <p><strong>Insurance File:</strong> {{ formData.documentationInfo.insuranceFile }}</p>
+    </div>
+  
+    <h3>Other Information</h3>
+    <div *ngIf="formData.otherInfo">
+      <p><strong>Some Other Field:</strong> {{ formData.otherInfo.someField }}</p>
+      <!-- Add other fields as needed
+    </div>
+  
+    <button (click)="submitData()">Submit All Data</button>
+  </div>
+   -->
+
+   <div>
+    <h2>All Form Data</h2>
+    <pre>{{ allFormData | json }}</pre> <!-- Displaying all form data in JSON format -->
+  
+    <button (click)="submitData()" pButton label="Submit All Data" icon="pi pi-check">Submit All Data</button>
+  </div>

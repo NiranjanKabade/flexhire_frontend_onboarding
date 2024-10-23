@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../../services/data.service';
 import { Observable } from 'rxjs';
+import { log } from 'console';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -38,6 +39,7 @@ export class CompanyDocumentationComponent implements OnInit{
   
 
   contactInfo: any;
+  combinedData: any; // To hold combined data from localStorage
 
 
   constructor(private messageService:MessageService, private dataService: DataService, private fb: FormBuilder){
@@ -46,8 +48,11 @@ export class CompanyDocumentationComponent implements OnInit{
 
     this.documentationForm = this.fb.group({
       incorporationFile: [null, Validators.required],
+      incorporationFileName: [''],
       businessLicenseFile: [null, Validators.required],
+      businessLicenseFileName: [''],
       insuranceFile: [null, Validators.required],
+      insuranceFileName: [''],
     });
   }
 
@@ -104,15 +109,21 @@ export class CompanyDocumentationComponent implements OnInit{
 
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      console.log(file);
+      
 
-     // Convert the file to Base64 and store it in the respective property
+    // Convert the file to Base64 and store it in the respective property
     this.convertFileToBase64(file, (base64) => {
       if (base64) {
         if (fileType === 'incorporation') {
+          this.documentationForm.patchValue({incorporationFile:file})
+          this.documentationForm.patchValue({incorporationFileName:file.name})
           this.incorporationFileBase64 = base64 as string;
         } else if (fileType === 'businessLicense') {
+          this.documentationForm.patchValue({businessLicenseFileName:file.name})
           this.businessLicenseFileBase64 = base64 as string;
         } else if (fileType === 'insurance') {
+          this.documentationForm.patchValue({insuranceFileName:file.name})
           this.insuranceFileBase64 = base64 as string;
         }
       }
@@ -150,34 +161,85 @@ export class CompanyDocumentationComponent implements OnInit{
     } 
   }
 
+  getFileIcon(fileType: any) {
+    console.log(fileType);
+    
+    // const ext = fileType.split('/')[1];
+    const icons: { [key: string]: string } = {
+      'jpeg': './assets/jpeg.png',
+      'jpg': './assets/jpg.png',
+      'png': './assets/png.png',
+      'pdf': './assets/pdf.png',
+    };
+    return icons[fileType] || './assets/default.png'; // default icon if the type is unknown
+  }
+
+  getFileExtensionFromBase64(base64String: string): string | null {
+    // if (typeof base64String !== 'string') {
+    //   console.error('Expected a string for base64String, received:', base64String);
+    //   return null; // Return null if the input is not a string
+    // }
+  
+    const matches = base64String.match(/data:([^;]+);base64/);
+    if (matches && matches[1]) {
+      const mimeType = matches[1];
+      const extension = mimeType.split('/')[1];
+      return extension;
+    }
+    return null;
+  }
+
+getFileNameFromBase64(base64String: string, defaultName: string = 'file'): string {
+    const matches = base64String.match(/data:([^;]+);base64/);
+    
+    if (matches && matches[1]) {
+      const mimeType = matches[1];
+      const extension = mimeType.split('/')[1]; // Extract extension
+  
+      return `${defaultName}.${extension}`; // Combine with default name
+    }
+    
+    return `${defaultName}.txt`; // Fallback if MIME type is not valid
+  }
+
+
    // Function to patch the form data when returning to the page
    patchFileData(): void {
     const savedData = this.dataService.getData();
-    console.log();
-    
-    if (savedData?.documentationInfo) {
-      const { incorporationFile, businessLicenseFile, insuranceFile } = savedData.documentationInfo;
-  
-      // Patch Base64 data into the form (you can store the Base64 for UI display if needed)
-      this.incorporationFileBase64 = incorporationFile || '';
-      this.businessLicenseFileBase64 = businessLicenseFile || '';
-      this.insuranceFileBase64 = insuranceFile || '';
 
-      // Update UI and form with the Base64 data if available
-      if (incorporationFile) {
-        this.incorporationFile = this.convertBase64ToFile(incorporationFile, 'incorporationFile');
-        this.documentationForm.patchValue({ incorporationFile: this.incorporationFile });
+    if (savedData && savedData.documentationInfo) {
+      const { documentationInfo } = savedData;
+      // const data = JSON.parse(documentationInfo)
+      // console.log(data.incorporationFile);
+      // console.log(documentationInfo.incorporationFile);
+      
+
+      // Patch the form with Base64 strings if available
+      if (documentationInfo.incorporationFile) {
+        this.documentationForm.patchValue({ 
+          incorporationFile: documentationInfo.incorporationFile,
+          incorporationFileName: documentationInfo.incorporationFileName 
+         });
+        // console.log(this.documentationForm);
+        
+
+        
       }
-      if (businessLicenseFile) {
-        this.businessLicenseFile = this.convertBase64ToFile(businessLicenseFile, 'businessLicenseFile');
-        this.documentationForm.patchValue({ businessLicenseFile: this.businessLicenseFile });
+      if (documentationInfo.businessLicenseFile) {
+        this.documentationForm.patchValue({ 
+          businessLicenseFile: documentationInfo.businessLicenseFile,
+          businessLicenseFileName: documentationInfo.businessLicenseFileName
+         });
       }
-      if (insuranceFile) {
-        this.insuranceFile = this.convertBase64ToFile(insuranceFile, 'insuranceFile');
-        this.documentationForm.patchValue({ insuranceFile: this.insuranceFile });
+      if (documentationInfo.insuranceFile) {
+        this.documentationForm.patchValue({ 
+          insuranceFile: documentationInfo.insuranceFile,
+          insuranceFileName: documentationInfo.insuranceFileName
+         });
       }
     }
-  }
+    }
+  
 
   convertBase64ToFile(base64: string, fileName: string): File {
     const arr = base64.split(',');
@@ -197,33 +259,33 @@ export class CompanyDocumentationComponent implements OnInit{
     this.messageService.add({ severity, summary, detail });
   }
 
-
-
  
-
   onNext() {
-    // Retrieve data from the DataService
-    const combinedData = this.dataService.getData();
+   
 
     if (this.incorporationFile && this.businessLicenseFile && this.insuranceFile) {
+      
       const companyDocumentationData = {
-        // incorporationFile: this.incorporationFile,
-        // businessLicenseFile: this.businessLicenseFile,
-        // insuranceFile: this.insuranceFile,
-
         incorporationFile: this.incorporationFileBase64,
+        incorporationFileName: this.documentationForm.value.incorporationFileName, // Add file name
         businessLicenseFile: this.businessLicenseFileBase64,
+        businessLicenseFileName: this.documentationForm.value.businessLicenseFileName, // Add file name
         insuranceFile: this.insuranceFileBase64,
+        insuranceFileName: this.documentationForm.value.insuranceFileName, // Add file name
       };
 
-       // Combine all data
-       const allData = {
-        ...combinedData,
-        documentationInfo: companyDocumentationData
-      };
+       // Load the combined data after saving
+           // Combine all data
+           const allData = {
+            ...this.dataService.getData(),
+            documentationInfo: companyDocumentationData
+          };
+     console.log(allData);
+     
+      // Save combined data using the dataService's setData method
+    this.dataService.setData(allData);
 
-      this.dataService.setData(allData);
-      this.showToast('success', 'Files saved', 'Documentation files have been saved successfully.');
+      
       // Call the injected next function from the DashboardComponent
       this.next(); // Call the injected next function
 

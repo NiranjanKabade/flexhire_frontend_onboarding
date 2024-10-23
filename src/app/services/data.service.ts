@@ -11,12 +11,11 @@ export interface Country {
   providedIn: 'root',
 })
 export class DataService {
+
+  private storageKey = 'formData';
   
   private apiUrl = 'https://restcountries.com/v2/all'; // Replace with your API endpoint
-  // Initialize BehaviorSubject with a default value
-  private dataSubject = new BehaviorSubject<any>(null);
-  // Observable for components to subscribe to
-  data$ = this.dataSubject.asObservable();
+ 
 
   constructor(private http: HttpClient) {}
 
@@ -25,17 +24,17 @@ export class DataService {
   }
 
   // Method to set data
-  setData(data: any) {
-    this.dataSubject.next(data);
+  setData(data: any){
+    localStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 
   // Method to get the current data
-  getData() {
-    return this.dataSubject.getValue();
+  getData(){
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : null;
   }
 
-  // Optional: You can add a reset method to clear data if needed
-  resetData() {
-    this.dataSubject.next(null);
+  clearData(): void {
+    localStorage.removeItem(this.storageKey);
   }
 }

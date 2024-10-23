@@ -44,12 +44,12 @@ export class CompanyInfoComponent implements OnInit {
 
   companyForm: FormGroup;
   countries: Country[] = [];
+  formKey = 'companyInfo'; // Unique key for this form
+  savedData: any;    // Store the saved data
 
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
-    // private http: HttpClient,
-    // private router: Router,
     private messageService: MessageService
   ) {
     this.companyForm = this.fb.group({
@@ -107,29 +107,15 @@ export class CompanyInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     // Load previously saved form data (if any)
-     this.patchFormData();
+     // Load saved form data from localStorage for this form
+    this.savedData = this.dataService.getData();
+    console.log(this.savedData);
+    
+    if (this.savedData) {
+      this.companyForm.patchValue(this.savedData.companyInfo);
+    }
 
     this.loadCountries();
-  }
-
-  patchFormData(): void {
-    // Load previously saved form data from the DataService
-    const savedData = this.dataService.getData();
-    console.log(savedData);
-    
-    if (savedData) {
-      this.companyForm.patchValue({
-        companyName: savedData.companyName || '',
-        businessRegNumber: savedData.businessRegNumber || '',
-        taxIdentificationNumber: savedData.taxIdentificationNumber || '',
-        website: savedData.website || '',
-        description: savedData.description || '',
-        industry: savedData.industry || '',
-        size: savedData.size || '',
-        country: savedData.country || '', // Patch the country field as well
-      });
-    }
   }
 
   loadCountries(): void {
@@ -143,10 +129,9 @@ export class CompanyInfoComponent implements OnInit {
   }
   onNext() {
     if (this.companyForm.valid) {
-      // Save data logic, including country ID
-      
-      this.dataService.setData(this.companyForm.value);
-      // Call the injected next function from the DashboardComponent
+
+      const companyData = this.companyForm.value;
+      this.dataService.setData({ companyInfo: companyData });       // Call the injected next function from the DashboardComponent
       this.next(); // Call the injected next function
     } else {
       this.messageService.add({

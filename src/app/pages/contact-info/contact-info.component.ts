@@ -48,9 +48,9 @@ export class ContactInfoComponent implements OnInit{
   });
 
 
-   // Load previously saved company info data
-   this.companyInfo = this.dataService.getData();
-   console.log('Company Info:', this.companyInfo);
+  //  // Load previously saved company info data
+  //  this.companyInfo = this.dataService.getData();
+  //  console.log('Company Info:', this.companyInfo);
 
   
   }
@@ -60,11 +60,11 @@ export class ContactInfoComponent implements OnInit{
      // Load the previously saved data (if any) and patch it to the form
      this.savedData = this.dataService.getData();
     
-     if (this.savedData?.contactInfo) {
+     if (this.savedData) {
        // Patch contact info data
        this.contactForm.patchValue({
-         contacts: this.savedData.contactInfo.contacts,
-         hrcontacts: this.savedData.contactInfo.hrcontacts
+         contacts: this.savedData.contacts,
+         hrcontacts: this.savedData.hrcontacts
        });
        
        // For dynamic fields in FormArray, patch manually
@@ -74,7 +74,6 @@ export class ContactInfoComponent implements OnInit{
  
     
   }
-
 
   get contacts(): FormArray {
     return this.contactForm.get('contacts') as FormArray; // Ensure this returns a FormArray
@@ -112,7 +111,6 @@ export class ContactInfoComponent implements OnInit{
   addContact(): void {
     // Make sure contacts is not null before calling push
     this.contacts.push(this.createContact());
-    this.hrcontacts.push(this.createContact());
   }
   
 
@@ -120,9 +118,7 @@ export class ContactInfoComponent implements OnInit{
     if (this.contacts.length > 1) {
       this.contacts.removeAt(index);
     }
-    if(this.hrcontacts.length > 1){
-      this.hrcontacts.removeAt(index);
-    }
+    
   }
 
   addHrContact() {
@@ -130,7 +126,9 @@ export class ContactInfoComponent implements OnInit{
   }
 
   removeHrContact(index: number) {
-    this.hrcontacts.removeAt(index);
+    if (this.hrcontacts.length > 1) {
+      this.hrcontacts.removeAt(index);
+    }
   }
 
     // Helper method to patch a FormArray
@@ -155,10 +153,11 @@ export class ContactInfoComponent implements OnInit{
          // Store the contact form data if needed
       const contactData = this.contactForm.value;
 
+      const companyInfo = this.dataService.getData()?.companyInfo || {};
       // Optionally, you can also combine it with the company info
       const combinedData = {
-        companyInfo: this.companyInfo,
-        contactInfo: contactData,
+        companyInfo: companyInfo,
+      contactInfo: contactData,
       };
 
       // You can save the combined data using the service if needed

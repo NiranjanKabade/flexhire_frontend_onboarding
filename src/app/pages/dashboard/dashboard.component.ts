@@ -32,6 +32,8 @@ import { StepsModule } from 'primeng/steps';
 import { CompanyDocumentationComponent } from '../company-documentation/company-documentation.component';
 import { HttpClient } from '@angular/common/http';
 import { FormDataService } from '../../services/form-data.service';
+import { DoneComponent } from '../done/done.component';
+import { DataService } from '../../services/data.service';
 
 interface Step {
   title: string;
@@ -52,6 +54,7 @@ interface Step {
     CompanyInfoComponent,
     ContactInfoComponent,
     CompanyDocumentationComponent,
+    DoneComponent,
     ButtonModule,
     StepperModule,
     StepsModule,
@@ -77,19 +80,17 @@ export class DashboardComponent implements OnInit {
       title: 'Company Documents',
       component: CompanyDocumentationComponent,
     },
-    { title: 'Done', content: 'Completed' },
+    { title: 'Done', component: DoneComponent },
   ];
 
   activeStep = 0;
   formData: any = {};
-  warningMessage: string | null = null;
+  collectedData: any = {};
 
-  constructor(private formDataService: FormDataService) {}
+  constructor(private dataServices: DataService) {}
 
   ngOnInit(): void {
-    this.formDataService.formData$.subscribe((data) => {
-      this.formData = data;
-    });
+   
   }
   get componentInjector() {
     return Injector.create({
@@ -112,6 +113,7 @@ export class DashboardComponent implements OnInit {
             next: () => this.onNextStep(),
           },
         },
+        
       ],
     });
   }
@@ -119,10 +121,9 @@ export class DashboardComponent implements OnInit {
   onNextStep() {
     const currentStepComponent = this.getCurrentStepComponent();
     if (currentStepComponent) {
-      // const formData = currentStepComponent.getFormData();
-      // this.formDataService.updateFormData(formData);
+     
     }
-    if (this.activeStep < this.steps.length - 1) {
+   if (this.activeStep < this.steps.length - 1) {
       this.activeStep++;
     }
   }
@@ -143,7 +144,15 @@ export class DashboardComponent implements OnInit {
       case 0: return CompanyInfoComponent;
       case 1: return ContactInfoComponent;
       case 2: return CompanyDocumentationComponent;
+      case 3:return DoneComponent;
       default: return null;
     }
   }
+
+   // Check if all previous steps are completed
+   allStepsCompleted(): boolean {
+    return this.activeStep === 3;
+  }
+
+  
 }

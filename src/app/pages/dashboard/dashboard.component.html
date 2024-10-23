@@ -29,11 +29,13 @@
     </div>
     <div class="step-content">
       <ng-container *ngIf="activeStep === 0">
-        <app-company-info [next]="onNextStep.bind(this)"
+        <app-company-info 
+        [next]="onNextStep.bind(this)"
         [previous]="goToPreviousStep.bind(this)"></app-company-info>
       </ng-container>
       <ng-container *ngIf="activeStep === 1">
-        <app-contact-info [next]="onNextStep.bind(this)"
+        <app-contact-info 
+        [next]="onNextStep.bind(this)"
         [previous]="goToPreviousStep.bind(this)"></app-contact-info>
       </ng-container>
       <ng-container *ngIf="activeStep === 2">
@@ -42,17 +44,9 @@
           [previous]="goToPreviousStep.bind(this)"
         ></app-company-documentation>
       </ng-container>
-      <!-- <div class="navigation-buttons">
-        <button (click)="prevStep()" [disabled]="activeStep === 0">
-          Previous
-        </button>
-        <button
-          (click)="onNextStep()"
-          [disabled]="activeStep === steps.length - 1"
-        >
-          Next
-        </button>
-      </div> -->
+      <ng-container *ngIf="activeStep === 3">
+        <app-done></app-done>
+      </ng-container>
     </div>
   </div>
 </div>
